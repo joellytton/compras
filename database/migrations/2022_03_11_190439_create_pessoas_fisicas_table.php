@@ -22,6 +22,8 @@ return new class extends Migration
             $table->enum('sexo', ['masculino', 'feminino'])->default('masculino');
             $table->unsignedBigInteger('user_alteracao_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_alteracao_id')->references('id')->on('users');
         });
     }
 

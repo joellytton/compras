@@ -16,9 +16,12 @@ return new class extends Migration
         Schema::create('areas_abrangencias', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('cidade_id');
+            $table->enum('status', ['ativo', 'inativo'])->default('ativo');
+            $table->unsignedBigInteger('user_alteracao_id')->nullable();
             $table->timestamps();
 
             $table->foreign('cidade_id')->references('id')->on('cidades');
+            $table->foreign('user_alteracao_id')->references('id')->on('users');
         });
     }
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Administracao\AreaAbrangenciaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,4 +22,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::middleware('auth')->group(function () {
+    Route::resource('/areaAbrangencia', AreaAbrangenciaController::class);
+
+
+});
 require __DIR__.'/auth.php';
