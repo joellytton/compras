@@ -23,8 +23,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('/areaAbrangencia', AreaAbrangenciaController::class);
-
-
+    Route::resource('/areaAbrangencia', AreaAbrangenciaController::class)->parameters(['areaAbrangencia' => 'areaAbrangencia']);;
 });
 require __DIR__.'/auth.php';

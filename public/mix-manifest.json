@@ -67,5 +67,7 @@
     "/assets/summernote/summernote.min.css": "/assets/summernote/summernote.min.css",
     "/assets/summernote/summernote.min.js": "/assets/summernote/summernote.min.js",
     "/assets/summernote/summernote.min.js.LICENSE.txt": "/assets/summernote/summernote.min.js.LICENSE.txt",
-    "/assets/summernote/summernote.min.js.map": "/assets/summernote/summernote.min.js.map"
+    "/assets/summernote/summernote.min.js.map": "/assets/summernote/summernote.min.js.map",
+    "/assets/select2-bootstrap4-theme/select2-bootstrap4.css": "/assets/select2-bootstrap4-theme/select2-bootstrap4.css",
+    "/assets/select2-bootstrap4-theme/select2-bootstrap4.min.css": "/assets/select2-bootstrap4-theme/select2-bootstrap4.min.css"
 }

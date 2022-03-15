@@ -11,9 +11,9 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Início</a></li>
                         <li class="breadcrumb-item">
-                            <a href="{{route('categoriaVeiculo.index')}}">Lista de categorias</a>
+                            <a href="{{route('areaAbrangencia.index')}}">Lista de área de abrangência</a>
                         </li>
-                        <li class="breadcrumb-item active">Editar categoria veículo</li>
+                        <li class="breadcrumb-item active">Editar área de abrangência</li>
                     </ol>
                 </div>
             </div>
@@ -25,10 +25,10 @@
             <div class="row">
                 <div class="col">
                     <div class="card card-primary">
-                        <form action="{{route('categoriaVeiculo.update', $categoriaVeiculo)}}" method="post">
+                        <form action="{{route('areaAbrangencia.update', $areaAbrangencia)}}" method="post">
                             @csrf
                             @method('PUT')
-                            @include('administracao.categoria_veiculo.form')
+                            @include('administracao.area_abrangencia.form')
                         </form>
                     </div>
                 </div>

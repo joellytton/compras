@@ -12,7 +12,14 @@ class AreaAbrangencia extends Model
 
     protected $table = 'areas_abrangencias';
 
-
+    protected $fillable = [
+        'cidade_id',
+        'status',
+        'user_cadastro_id',
+        'user_alteracao_id',
+        'created_at',
+        'updated_at'
+    ];
 
     protected static function buscar(int $perPage, string $keyword): AbstractPaginator
     {

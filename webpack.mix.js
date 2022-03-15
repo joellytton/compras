@@ -50,3 +50,5 @@ mix.combine([
 mix.copy('resources/template/dist/img', 'public/img');
 mix.copy('resources/template/plugins/fontawesome-free/webfonts', 'public/webfonts');
 mix.copy('resources/template/plugins/summernote', 'public/assets/summernote');
+mix.copy('resources/template/plugins/select2', 'public/assets/select2');
+mix.copy('resources/template/plugins/select2-bootstrap4-theme', 'public/assets/select2-bootstrap4-theme');

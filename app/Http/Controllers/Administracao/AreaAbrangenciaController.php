@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Administracao;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Administracao\AreaAbrangenciaRequest;
 use App\Models\Administracao\AreaAbrangencia;
+use App\Models\Administracao\Cidade;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,38 +24,43 @@ class AreaAbrangenciaController extends Controller
 
     public function create(): View
     {
-        return view('administracao.area_abrangencia.create');
+        $cidades = Cidade::where('status', 'ativo')->get();
+        return view('administracao.area_abrangencia.create', compact('cidades'));
     }
 
-    public function store(Request $request): Response
+    public function store(AreaAbrangenciaRequest $request): Response
     {
-        $areaAbrangencia = new AreaAbrangencia();
-        $areaAbrangencia->create($request->all());
+        DB::beginTransaction();
 
-        return redirect()->route('administracao.area-abrangencia.index')
-            ->with('success', 'Área de abrangência cadastrada com sucesso!');
+        if (!AreaAbrangencia::create($request->all())) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Erro ao cadastrar área de abrangência!');
+        }
+
+        DB::commit();
+        return redirect()->route('areaAbrangencia.index')->with('success', 'Área de abrangência cadastrada com sucesso!');
     }
 
 
     public function edit(AreaAbrangencia $areaAbrangencia): View
     {
-        return view('administracao.area_abrangencia.edit', compact('areaAbrangencia'));
+        $cidades = Cidade::where('status', 'ativo')->get();
+        return view('administracao.area_abrangencia.edit', compact('areaAbrangencia', 'cidades'));
     }
 
-    public function update(Request $request, AreaAbrangencia $areaAbrangencia): Response
+    public function update(AreaAbrangenciaRequest $request, AreaAbrangencia $areaAbrangencia): Response
     {
         $areaAbrangencia->update($request->all());
 
-        return redirect()->route('administracao.area-abrangencia.index')
+        return redirect()->route('areaAbrangencia.index')
             ->with('success', 'Área de abrangência atualizada com sucesso!');
     }
 
     public function destroy(AreaAbrangencia $areaAbrangencia): Response
     {
-        $areaAbrangencia->delete();
-        $areaAbrangencia->update(['status' => 'inativo']);
+        $areaAbrangencia->update(['status' => 'inativo', 'user_alteracao_id' => auth()->user()->id]);
 
-        return redirect()->route('administracao.area-abrangencia.index')
+        return redirect()->route('areaAbrangencia.index')
             ->with('success', 'Área de abrangência excluída com sucesso!');
     }
 }
