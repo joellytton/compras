@@ -5,12 +5,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Área de Abrangência</h1>
+                    <h1>Modalidade</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Início</a></li>
-                        <li class="breadcrumb-item active">Área de abrangência</li>
+                        <li class="breadcrumb-item active">Modalidade</li>
                     </ol>
                 </div>
             </div>
@@ -24,8 +24,8 @@
                 <div class="col-lg-12 text-right mb-4">
                     <div class="card">
                         <div class="card-body">
-                            <a class="btn btn-primary btn-md" href="{{route('areaAbrangencia.create')}}" role="button">
-                                Nova Área de Abrangência
+                            <a class="btn btn-primary btn-md" href="{{route('modalidade.create')}}" role="button">
+                                Nova Modalidade
                             </a>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Lista de área de abrangência</h3>
+                            <h3 class="card-title">Lista de modalidades</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body p-0">
@@ -44,22 +44,22 @@
                                 <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                    <th class="text-center">Área e abrangência</th>
+                                    <th class="text-center">Modalidade</th>
                                     <th class="text-center">Ação</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @forelse($areasAbrangencia as $areaAbrangencia)
+                                @forelse($modalidades as $modalidade)
                                     <tr>
-                                        <td>{{$areaAbrangencia->id}}</td>
-                                        <td class="text-center">{{$areaAbrangencia->cidade}}</td>
+                                        <td>{{$modalidade->id}}</td>
+                                        <td class="text-center">{{$modalidade->modalidade}}</td>
                                         <td class="text-center">
-                                            <a href="{{route('areaAbrangencia.edit', $areaAbrangencia->id)}}"
+                                            <a href="{{route('modalidade.edit', $modalidade->id)}}"
                                                class="btn btn-primary btn-sm mr-1">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{route('areaAbrangencia.destroy', $areaAbrangencia->id)}}"
-                                                  method="POST" id="formLaravel{{$areaAbrangencia->id}}"
+                                            <form action="{{route('modalidade.destroy', $modalidade->id)}}"
+                                                  method="POST" id="formLaravel{{$modalidade->id}}"
                                                   style="display:inline;">
                                                 @method('DELETE')
                                                 @csrf
@@ -71,7 +71,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3" class="text-center">Nenhuma área de abrangência encontrada</td>
+                                        <td colspan="3" class="text-center">Nenhuma modalidade encontrada</td>
                                     </tr>
                                 @endforelse
                                 </tbody>

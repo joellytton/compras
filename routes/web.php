@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Administracao\AreaAbrangenciaController;
+use App\Http\Controllers\Administracao\ModalidadeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('/areaAbrangencia', AreaAbrangenciaController::class)->parameters(['areaAbrangencia' => 'areaAbrangencia']);;
+    Route::resource('/areaAbrangencia', AreaAbrangenciaController::class)
+        ->parameters(['areaAbrangencia' => 'areaAbrangencia']);;
+    Route::resource('/modalidade', ModalidadeController::class);
 });
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

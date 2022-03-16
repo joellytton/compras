@@ -38,7 +38,8 @@ class AreaAbrangenciaController extends Controller
         }
 
         DB::commit();
-        return redirect()->route('areaAbrangencia.index')->with('success', 'Área de abrangência cadastrada com sucesso!');
+        return redirect()->route('areaAbrangencia.index')
+            ->with('success', 'Área de abrangência cadastrada com sucesso!');
     }
 
 
