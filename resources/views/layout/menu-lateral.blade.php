@@ -38,7 +38,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('objeto.index')}}"
+                       class="nav-link {!! (Request::is('objeto*') ? 'active' :"") !!}">
                         <i class="fas fa-circle nav-icon"></i>
                         <p>Objeto</p>
                     </a>

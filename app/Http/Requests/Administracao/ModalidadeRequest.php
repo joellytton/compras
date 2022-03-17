@@ -29,7 +29,7 @@ class ModalidadeRequest extends FormRequest
     public function rules()
     {
         return [
-            'modalidade' => 'required|max:255',
+            'nome' => 'required|max:255',
             'status' => ['required', Rule::in(['ativo', 'inativo'])],
             'user_cadastro_id' => ['required', 'integer', 'exists:users,id'],
         ];
@@ -38,8 +38,8 @@ class ModalidadeRequest extends FormRequest
     public function messages()
     {
         return [
-            'modalidade.required' => 'A modalidade é obrigatório',
-            'modalidade.max' => 'A modalidade deve ter no máximo 255 caracteres',
+            'nome.required' => 'A modalidade é obrigatório',
+            'nome.max' => 'A modalidade deve ter no máximo 255 caracteres',
             'status.required' => 'O status é obrigatório',
             'status.in' => 'O status é inválido',
             'user_cadastro_id.required' => 'Você não tem permissão para cadastrar uma modalidade',

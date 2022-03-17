@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('modalidades', function (Blueprint $table) {
             $table->id();
-            $table->string('modalidade', 250);
+            $table->string('nome', 250);
             $table->enum('status', ['ativo', 'inativo'])->default('ativo');
             $table->unsignedBigInteger('user_cadastro_id')->nullable();
             $table->unsignedBigInteger('user_alteracao_id')->nullable();

@@ -2,9 +2,9 @@
 <div class="card-body">
     <div class="form-group row">
         <div class="col-sm-12 col-md-5">
-            <label for="nome" class="col-form-label">Modalidade:</label>
+            <label for="nome" class="col-form-label">Objeto:</label>
             <input type="text" name="nome" class="form-control {{$errors->has('nome') ? 'is-invalid' : ''}}"
-                   aria-describedby="nomeFeedback" value="{{@$modalidade->nome}}">
+                   aria-describedby="nomeFeedback" value="{{@$objeto->nome}}">
             @if ($errors->has('nome'))
                 <div id="nomeFeedback" class="invalid-feedback">
                     {{$errors->first('nome')}}

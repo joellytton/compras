@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Administracao\AreaAbrangenciaController;
 use App\Http\Controllers\Administracao\ModalidadeController;
+use App\Http\Controllers\Administracao\ObjetoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,5 +28,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('/areaAbrangencia', AreaAbrangenciaController::class)
         ->parameters(['areaAbrangencia' => 'areaAbrangencia']);;
     Route::resource('/modalidade', ModalidadeController::class);
+    Route::resource('/objeto', ObjetoController::class);
 });
 require __DIR__ . '/auth.php';
