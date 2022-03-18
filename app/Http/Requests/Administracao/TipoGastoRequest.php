@@ -5,7 +5,7 @@ namespace App\Http\Requests\Administracao;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ObjetoRequest extends FormRequest
+class TipoGastoRequest extends FormRequest
 {
     public function authorize()
     {
@@ -26,7 +26,6 @@ class ObjetoRequest extends FormRequest
         }
     }
 
-
     public function rules()
     {
         return [
@@ -39,13 +38,13 @@ class ObjetoRequest extends FormRequest
     public function messages()
     {
         return [
-            'nome.required' => 'O objeto é obrigatório',
-            'nome.max' => 'O objeto deve ter no máximo 255 caracteres',
+            'nome.required' => 'O tipo de gasto é obrigatório',
+            'nome.max' => 'O tipo de gasto deve ter no máximo 255 caracteres',
             'status.required' => 'O status é obrigatório',
             'status.in' => 'O status é inválido',
-            'user_cadastro_id.required' => 'Você não tem permissão para cadastrar um objeto',
-            'user_cadastro_id.integer' => 'Você não tem permissão para cadastrar um objeto',
-            'user_cadastro_id.exists' => 'Você não tem permissão para cadastrar um objeto',
+            'user_cadastro_id.required' => 'Você não tem permissão para cadastrar uma tipo de gasto',
+            'user_cadastro_id.integer' => 'Você não tem permissão para cadastrar uma tipo de gasto',
+            'user_cadastro_id.exists' => 'Você não tem permissão para cadastrar uma tipo de gasto',
         ];
     }
 }

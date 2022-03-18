@@ -46,7 +46,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('tipoGasto.index')}}"
+                       class="nav-link {!! (Request::is('tipoGasto*') ? 'active' :"") !!}">
                         <i class="fas fa-circle nav-icon"></i>
                         <p>Tipo de Gasto</p>
                     </a>

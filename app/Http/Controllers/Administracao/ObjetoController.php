@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Administracao;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Administracao\ObjetoRequest;
 use App\Models\Administracao\Objeto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,7 @@ class ObjetoController extends Controller
         return view('administracao.objeto.create');
     }
 
-    public function store(Request $request): Response
+    public function store(ObjetoRequest $request): Response
     {
         DB::beginTransaction();
         if (!Objeto::create($request->all())) {
@@ -42,7 +43,7 @@ class ObjetoController extends Controller
         return view('administracao.objeto.edit', compact('objeto'));
     }
 
-    public function update(Request $request, Objeto $objeto): Response
+    public function update(ObjetoRequest $request, Objeto $objeto): Response
     {
         DB::beginTransaction();
         if (!$objeto->update($request->all())) {

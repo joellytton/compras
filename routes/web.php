@@ -3,6 +3,7 @@
 use App\Http\Controllers\Administracao\AreaAbrangenciaController;
 use App\Http\Controllers\Administracao\ModalidadeController;
 use App\Http\Controllers\Administracao\ObjetoController;
+use App\Http\Controllers\Administracao\TipoGastoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,5 +30,6 @@ Route::middleware('auth')->group(function () {
         ->parameters(['areaAbrangencia' => 'areaAbrangencia']);;
     Route::resource('/modalidade', ModalidadeController::class);
     Route::resource('/objeto', ObjetoController::class);
+    Route::resource('/tipoGasto', TipoGastoController::class);
 });
 require __DIR__ . '/auth.php';
