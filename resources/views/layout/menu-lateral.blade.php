@@ -54,7 +54,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('unidadeContempladas.index')}}"
+                       class="nav-link {!! (Request::is('unidadeContempladas*') ? 'active' :"") !!}">
                         <i class="fas fa-circle nav-icon"></i>
                         <p>Unidades Contempladas</p>
                     </a>

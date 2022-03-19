@@ -4,6 +4,7 @@ use App\Http\Controllers\Administracao\AreaAbrangenciaController;
 use App\Http\Controllers\Administracao\ModalidadeController;
 use App\Http\Controllers\Administracao\ObjetoController;
 use App\Http\Controllers\Administracao\TipoGastoController;
+use App\Http\Controllers\Administracao\UnidadesContempladasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,5 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/modalidade', ModalidadeController::class);
     Route::resource('/objeto', ObjetoController::class);
     Route::resource('/tipoGasto', TipoGastoController::class);
+    Route::resource('/unidadeContempladas', UnidadesContempladasController::class)
+        ->parameters(['unidadeContempladas' => 'unidadeContempladas']);
 });
 require __DIR__ . '/auth.php';
