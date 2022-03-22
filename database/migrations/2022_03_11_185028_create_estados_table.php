@@ -18,11 +18,14 @@ return new class extends Migration
             $table->unsignedBigInteger('pais_id');
             $table->char('sigla', '5');
             $table->string('nome', '250');
+            $table->unsignedBigInteger('user_cadastro_id')->nullable();
             $table->unsignedBigInteger('user_alteracao_id')->nullable();
             $table->enum('status', ['ativo', 'inativo'])->default('ativo');
             $table->timestamps();
 
             $table->foreign('pais_id')->references('id')->on('paises');
+            $table->foreign('user_cadastro_id')->references('id')->on('users');
+            $table->foreign('user_alteracao_id')->references('id')->on('users');
         });
     }
 

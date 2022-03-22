@@ -13,16 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cidades', function (Blueprint $table) {
+        Schema::create('areas_abrangencias', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('estado_id');
-            $table->string('nome', '250');
-            $table->unsignedBigInteger('user_cadastro_id')->nullable();
-            $table->unsignedBigInteger('user_alteracao_id')->nullable();
+            $table->unsignedBigInteger('cidade_id');
+            $table->unsignedBigInteger('processo_id');
             $table->enum('status', ['ativo', 'inativo'])->default('ativo');
+            $table->unsignedBigInteger('user_cadastro_id');
+            $table->unsignedBigInteger('user_alteracao_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('estado_id')->references('id')->on('estados');
+            $table->foreign('cidade_id')->references('id')->on('cidades');
+            $table->foreign('processo_id')->references('id')->on('processos');
             $table->foreign('user_cadastro_id')->references('id')->on('users');
             $table->foreign('user_alteracao_id')->references('id')->on('users');
         });
@@ -35,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cidades');
+        Schema::dropIfExists('areas_abrangencias');
     }
 };

@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('nome', 250);
             $table->enum('status', ['ativo', 'inativo'])->default('ativo');
-            $table->unsignedBigInteger('user_cadastro_id')->nullable();
+            $table->unsignedBigInteger('user_cadastro_id');
             $table->unsignedBigInteger('user_alteracao_id')->nullable();
             $table->timestamps();
 

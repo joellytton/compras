@@ -6,34 +6,23 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
-        Schema::create('areas_abrangencias', function (Blueprint $table) {
+        Schema::create('anotacoes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('cidade_id');
-            $table->enum('status', ['ativo', 'inativo'])->default('ativo');
-            $table->unsignedBigInteger('user_cadastro_id')->nullable();
+            $table->text('descricao');
+            $table->unsignedBigInteger('user_cadastro_id');
             $table->unsignedBigInteger('user_alteracao_id')->nullable();
+            $table->enum('status', ['ativo', 'inativo'])->default('ativo');
             $table->timestamps();
 
-            $table->foreign('cidade_id')->references('id')->on('cidades');
             $table->foreign('user_cadastro_id')->references('id')->on('users');
             $table->foreign('user_alteracao_id')->references('id')->on('users');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::dropIfExists('areas_abrangencias');
+        Schema::dropIfExists('anotacoes');
     }
 };
