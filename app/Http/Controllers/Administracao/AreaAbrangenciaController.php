@@ -59,8 +59,14 @@ class AreaAbrangenciaController extends Controller
 
     public function destroy(AreaAbrangencia $areaAbrangencia): Response
     {
-        $areaAbrangencia->update(['status' => 'inativo', 'user_alteracao_id' => auth()->user()->id]);
+        DB::beginTransaction();
 
+        if (!$areaAbrangencia->update(['status' => 'inativo', 'user_alteracao_id' => auth()->user()->id])) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Erro ao cadastrar um processo!');
+        }
+
+        DB::commit();
         return redirect()->route('areaAbrangencia.index')
             ->with('success', 'Área de abrangência excluída com sucesso!');
     }

@@ -14,9 +14,10 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('processo.index')}}" class="nav-link
+                    {!! (Request::is('processo*') ? 'active' :"") !!}">
                         <i class="fas fa-solid fa-cart-arrow-down nav-icon"></i>
-                        <p>Compras</p>
+                        <p>Processos</p>
                     </a>
                 </li>
 
