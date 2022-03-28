@@ -12,7 +12,7 @@ class Processo extends Model
 
     protected $fillable = [
         'sei',
-        'pregao',
+        'edital',
         'total_estimado',
         'total_homologado',
         'data_processo',
@@ -28,6 +28,6 @@ class Processo extends Model
 
     protected static function buscar(int $perPage, string $keyword): AbstractPaginator
     {
-        return self::where('pregao', 'like', "%{$keyword}%")->paginate($perPage);
+        return self::where('edital', 'like', "%{$keyword}%")->paginate($perPage);
     }
 }
