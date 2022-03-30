@@ -230,6 +230,59 @@
                 @endif
             </div>
         </div>
+
+        <div class="form-group row">
+            <div class="col-sm-12 col-md-12">
+                <button type="button" class="btn btn-primary btn-flat">+</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Centrais de Atendimento</h3>
+    </div>
+    <div class="card-body ">
+        <div class="divCentral">
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-8">
+                    <label for="central_id" class="col-form-label">Central de Atendimento:</label>
+                    <select name="central_id[]"
+                            class="form-control select2 {{$errors->has('central_id') ? 'is-invalid' : ''}}"
+                            aria-describedby="centralIdFeedback">
+                        <option value="">Selecione uma opção</option>
+                        @foreach($modalidades as $modalidade)
+                            <option value="{{$modalidade->id}}"
+                                    @if(@$processo->modalidade_id == $modalidade->id) selected
+                                @endif>
+                                {{$modalidade->nome}}
+                            </option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('central_id'))
+                        <div id="centralIdFeedback" class="invalid-feedback">
+                            {{$errors->first('central_id')}}
+                        </div>
+                    @endif
+
+                    @if (count($errors->all()) > 0)
+                        <div id="nomeFeedback" class="invalid-feedback">
+                            @foreach($errors->all() as $error)
+                                @if (!$loop->first)
+                                    {{$error}}<br>
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12 col-md-12">
+                <button type="button" class="btn btn-primary btn-flat" onclick="addCentral()">+</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -242,5 +295,34 @@
         $('.select2').select2({
             theme: 'bootstrap4'
         });
+
+        var quantidadeCentral = 1;
+        function addCentral() {
+            quantidadeCentral++;
+
+            if (quantidadeCentral > 3) {
+                alert('Limite de 3 centrais de atendimento');
+                return;
+            }
+            let central = `<div class="form-group row">
+            <div class="col-sm-12 col-md-8">
+                <label for="central_id" class="col-form-label">Central de Atendimento:</label>
+                <select name="central_id[]"
+                        class="form-control select2 {{$errors->has('central_id') ? 'is-invalid' : ''}}"
+                        aria-describedby="centralIdFeedback">
+                    <option value="">Selecione uma opção</option>'`;
+
+            @foreach($modalidades as $modalidade)
+                central += ` <option value="{{$modalidade->id}}"
+                        @if(@$processo->modalidade_id == $modalidade->id) selected  @endif>
+                            {{$modalidade->nome}}
+            </option>`;
+            @endforeach
+                central += `</select>
+            </div>
+        </div>`;
+            $(".divCentral").append(central);
+        }
+
     </script>
 @endpush
