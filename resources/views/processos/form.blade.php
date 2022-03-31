@@ -196,44 +196,46 @@
         <h3 class="card-title">Tipos de Gastos</h3>
     </div>
     <div class="card-body">
-        <div class="form-group row">
-            <div class="col-sm-12 col-md-4">
-                <label for="nome" class="col-form-label">Tipo de Gasto:</label>
-                <input type="text" name="nome" class="form-control {{$errors->has('nome') ? 'is-invalid' : ''}}"
-                       aria-describedby="nomeFeedback" value="{{@$tipoGasto->nome}}">
-                @if ($errors->has('nome'))
-                    <div id="nomeFeedback" class="invalid-feedback">
-                        {{$errors->first('nome')}}
-                    </div>
-                @endif
+        <div class="divTipoGasto">
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-4">
+                    <label for="nome" class="col-form-label">Tipo de Gasto:</label>
+                    <input type="text" name="nome" class="form-control {{$errors->has('nome') ? 'is-invalid' : ''}}"
+                           aria-describedby="nomeFeedback" value="{{@$tipoGasto->nome}}">
+                    @if ($errors->has('nome'))
+                        <div id="nomeFeedback" class="invalid-feedback">
+                            {{$errors->first('nome')}}
+                        </div>
+                    @endif
 
-                @if (count($errors->all()) > 0)
-                    <div id="nomeFeedback" class="invalid-feedback">
-                        @foreach($errors->all() as $error)
-                            @if (!$loop->first)
-                                {{$error}}<br>
-                            @endif
-                        @endforeach
-                    </div>
-                @endif
-            </div>
+                    @if (count($errors->all()) > 0)
+                        <div id="nomeFeedback" class="invalid-feedback">
+                            @foreach($errors->all() as $error)
+                                @if (!$loop->first)
+                                    {{$error}}<br>
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
 
-            <div class="col-sm-12 col-md-4">
-                <label for="valor_tipo_gasto" class="col-form-label">Valor do Tipo de Gasto:</label>
-                <input type="text" name="valor_tipo_gasto"
-                       class="form-control {{$errors->has('valor_tipo_gasto') ? 'is-invalid' : ''}}"
-                       aria-describedby="valorTipoGastoFeedback" value="{{@$tipoGasto->nome}}">
-                @if ($errors->has('valor_tipo_gasto'))
-                    <div id="valorTipoGastoFeedback" class="invalid-feedback">
-                        {{$errors->first('valor_tipo_gasto')}}
-                    </div>
-                @endif
+                <div class="col-sm-12 col-md-4">
+                    <label for="valor_tipo_gasto" class="col-form-label">Valor do Tipo de Gasto:</label>
+                    <input type="text" name="valor_tipo_gasto"
+                           class="form-control {{$errors->has('valor_tipo_gasto') ? 'is-invalid' : ''}}"
+                           aria-describedby="valorTipoGastoFeedback" value="{{@$tipoGasto->nome}}">
+                    @if ($errors->has('valor_tipo_gasto'))
+                        <div id="valorTipoGastoFeedback" class="invalid-feedback">
+                            {{$errors->first('valor_tipo_gasto')}}
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
 
         <div class="form-group row">
             <div class="col-sm-12 col-md-12">
-                <button type="button" class="btn btn-primary btn-flat">+</button>
+                <button type="button" class="btn btn-primary btn-flat" onclick="addTipoGasto()">+</button>
             </div>
         </div>
     </div>
@@ -295,13 +297,46 @@
         $('.select2').select2({
             theme: 'bootstrap4'
         });
+        var quantidadeTipoGasto = 1;
+
+        function addTipoGasto() {
+            quantidadeTipoGasto++;
+            var html = `
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-4">
+                    <label for="nome" class="col-form-label">Tipo de Gasto:</label>
+                    <input type="text" name="nome" class="form-control " aria-describedby="nomeFeedback" value="">
+                </div>
+
+                <div class="col-sm-12 col-md-4">
+                    <label for="valor_tipo_gasto" class="col-form-label">Valor do Tipo de Gasto:</label>
+                    <input type="text" name="valor_tipo_gasto"
+                    class="form-control " aria-describedby="valorTipoGastoFeedback" value="">
+                </div>
+                <div class="col-sm-12 col-md-1">
+                    <label for="valor_tipo_gasto" class="col-form-label">&emsp;</label>
+                    <button type="button" class="btn btn-danger btn-flat form-control"
+                    onclick="removeTipoGasto()">
+                     <i class="fas fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </div>`;
+            $('.divTipoGasto').append(html);
+        }
 
         var quantidadeCentral = 1;
+
         function addCentral() {
             quantidadeCentral++;
 
-            if (quantidadeCentral > 3) {
-                alert('Limite de 3 centrais de atendimento');
+            if (quantidadeCentral > 5) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'alert',
+                    title: "Limite de 5 centrais de atendimento",
+                    showConfirmButton: true,
+                    timer: 2000
+                })
                 return;
             }
             let central = `<div class="form-group row">

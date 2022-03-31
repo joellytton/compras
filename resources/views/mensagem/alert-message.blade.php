@@ -18,7 +18,7 @@
             icon: 'error',
             title: "{{Session::get('error')}}",
             showConfirmButton: false,
-            timer: 2000
+            timer: 4000
         })
     </script>
 @endif
