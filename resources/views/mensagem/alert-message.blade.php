@@ -27,7 +27,7 @@
     <script>
         Swal.fire({
             position: 'center',
-            icon: 'alert',
+            icon: 'warning',
             title: "{{Session::get('alert')}}",
             showConfirmButton: false,
             timer: 2000
