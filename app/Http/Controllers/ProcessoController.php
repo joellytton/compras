@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProcessoRequest;
 use App\Models\Administracao\Modalidade;
 use App\Models\Administracao\Objeto;
+use App\Models\Administracao\TipoGasto;
 use App\Models\Processo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +28,8 @@ class ProcessoController extends Controller
     {
         $objetos = Objeto::where('status', '=', 'ativo')->get();
         $modalidades = Modalidade::where('status', '=', 'ativo')->get();
-        return view('processos.create', compact('objetos', 'modalidades'));
+        $tiposGastos = TipoGasto::where('status', '=', 'ativo')->get();
+        return view('processos.create', compact('objetos', 'modalidades', 'tiposGastos'));
     }
 
     public function store(ProcessoRequest $request): Response

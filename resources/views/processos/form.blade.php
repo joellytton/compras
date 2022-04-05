@@ -197,8 +197,18 @@
             <div class="form-group row">
                 <div class="col-sm-12 col-md-4">
                     <label for="tipos_gastos_id" class="col-form-label">Tipo de Gasto:</label>
-                    <input type="text" name="tipos_gastos_id" class="form-control {{$errors->has('tipos_gastos_id') ? 'is-invalid' : ''}}"
-                           aria-describedby="tiposGastosIdFeedback" value="{{@$processo->tipos_gastos_id}}">
+                    <select name="tipos_gastos_id[]"
+                            class="form-control select2 {{$errors->has('tipos_gastos_id') ? 'is-invalid' : ''}}"
+                            aria-describedby="tiposGastosIdFeedback">
+                        <option value="">Selecione uma opção</option>
+                        @foreach($tiposGastos as $tipoGasto)
+                            <option value="{{$tipoGasto->id}}"
+                                    @if(@$processo->tipos_gastos_id == $tipoGasto->id) selected
+                                @endif>
+                                {{$modalidade->nome}}
+                            </option>
+                        @endforeach
+                    </select>
                     @if ($errors->has('tipos_gastos_id'))
                         <div id="tiposGastosIdFeedback" class="invalid-feedback">
                             {{$errors->first('tipos_gastos_id')}}
@@ -293,27 +303,38 @@
             <div class="form-group row">
                 <div class="col-sm-12 col-md-4">
                     <label for="nome" class="col-form-label">Tipo de Gasto:</label>
-                    <input type="text" name="nome" class="form-control " aria-describedby="nomeFeedback" value="">
-                </div>
+                                        <select name="tipos_gastos_id[]"
+                            class="form-control select2 {{$errors->has('tipos_gastos_id') ? 'is-invalid' : ''}}"
+                            aria-describedby="tiposGastosIdFeedback">
+                        <option value="">Selecione uma opção</option>
+                        @foreach($tiposGastos as $tipoGasto)
+                            <option value="{{$tipoGasto->id}}"
+                                @if(@$processo->tipos_gastos_id == $tipoGasto->id) selected @endif>
+                                {{$tipoGasto->nome}}
+                            </option>
+                        @endforeach
+            </select>
+        </div>
 
-                <div class="col-sm-12 col-md-4">
-                    <label for="valor_tipo_gasto" class="col-form-label">Valor do Tipo de Gasto:</label>
-                    <input type="text" name="valor_tipo_gasto"
-                    class="form-control " aria-describedby="valorTipoGastoFeedback" value="">
-                </div>
-                <div class="col-sm-12 col-md-1">
-                    <label for="valor_tipo_gasto" class="col-form-label">&emsp;</label>
-                    <button type="button" class="btn btn-danger btn-flat form-control"
-                    onclick="removeLinha($(this))">
-                     <i class="fas fa-solid fa-trash"></i>
-                    </button>
-                </div>
-            </div>`;
+        <div class="col-sm-12 col-md-4">
+            <label for="valor_tipo_gasto" class="col-form-label">Valor do Tipo de Gasto:</label>
+            <input type="text" name="valor_tipo_gasto"
+            class="form-control " aria-describedby="valorTipoGastoFeedback" value="">
+        </div>
+        <div class="col-sm-12 col-md-1">
+            <label for="valor_tipo_gasto" class="col-form-label">&emsp;</label>
+            <button type="button" class="btn btn-danger btn-flat form-control"
+            onclick="removeLinhaTipoGasto($(this))">
+             <i class="fas fa-solid fa-trash"></i>
+            </button>
+        </div>
+    </div>`;
             $('.divTipoGasto').append(html);
         }
 
-        function removeLinha(element) {
+        function removeLinhaTipoGasto(element) {
             element.parent().parent().remove();
+            quantidadeTipoGasto--;
         }
 
         var quantidadeCentral = 1;
