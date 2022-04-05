@@ -31,7 +31,13 @@ class UsuarioController extends Controller
     public function store(UsuarioRequest $request): Response
     {
         DB::beginTransaction();
-        if (!User::create($request->all())) {
+        $usuario = User::create($request->all());
+        if (!$usuario) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Erro ao cadastrar usuário');
+        }
+
+        if (!$usuario->pessoaFisica()->create($request->all())) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Erro ao cadastrar usuário');
         }
