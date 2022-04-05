@@ -7,6 +7,7 @@ use App\Models\Administracao\Modalidade;
 use App\Models\Administracao\Objeto;
 use App\Models\Administracao\TipoGasto;
 use App\Models\Processo;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -29,7 +30,12 @@ class ProcessoController extends Controller
         $objetos = Objeto::where('status', '=', 'ativo')->get();
         $modalidades = Modalidade::where('status', '=', 'ativo')->get();
         $tiposGastos = TipoGasto::where('status', '=', 'ativo')->get();
-        return view('processos.create', compact('objetos', 'modalidades', 'tiposGastos'));
+        $usuarios = User::where('status', '=', 'ativo')->get();
+        return view('processos.create', compact(
+            'objetos',
+            'modalidades',
+            'tiposGastos',
+            'usuarios'));
     }
 
     public function store(ProcessoRequest $request): Response

@@ -19,9 +19,8 @@ class UsuarioRequest extends FormRequest
             'status' => 'ativo',
             'user_cadastro_id' => auth()->user()->id,
             'data_nascimento' => data_br_para_iso($this->data_nascimento),
-            'cpf' => str_replace_all(str_replace_all($this->cpf, '.', '') , '-', ''),
+            'cpf' => str_replace('-', "", str_replace('.', "", $this->cpf))
         ]);
-        dd($this->cpf);
         if ($this->method() == 'PUT') {
             $this->merge([
                 'user_alteracao_id' => auth()->user()->id,

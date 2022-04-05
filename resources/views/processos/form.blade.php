@@ -84,10 +84,10 @@
                     class="form-control select2 {{$errors->has('tecnico_responsavel_id') ? 'is-invalid' : ''}}"
                     aria-describedby="tecnicoResponsavelIdFeedback">
                 <option value="">Selecione uma opção</option>
-                @foreach($objetos as $objeto)
-                    <option value="{{$objeto->id}}"
-                            @if(@$processo->tecnico_responsavel_id == $objeto->id) selected @endif>
-                        {{$objeto->nome}}
+                @foreach($usuarios as $usuario)
+                    <option value="{{$usuario->id}}"
+                            @if(@$processo->tecnico_responsavel_id == $usuario->id) selected @endif>
+                        {{$usuario->name}}
                     </option>
                 @endforeach
             </select>
@@ -205,7 +205,7 @@
                             <option value="{{$tipoGasto->id}}"
                                     @if(@$processo->tipos_gastos_id == $tipoGasto->id) selected
                                 @endif>
-                                {{$modalidade->nome}}
+                                {{$tipoGasto->nome}}
                             </option>
                         @endforeach
                     </select>
@@ -220,7 +220,7 @@
                     <label for="valor_tipo_gasto" class="col-form-label">Valor do Tipo de Gasto:</label>
                     <input type="text" name="valor_tipo_gasto"
                            class="form-control {{$errors->has('valor_tipo_gasto') ? 'is-invalid' : ''}}"
-                           aria-describedby="valorTipoGastoFeedback" value="{{@$tipoGasto->nome}}">
+                           aria-describedby="valorTipoGastoFeedback" value="">
                     @if ($errors->has('valor_tipo_gasto'))
                         <div id="valorTipoGastoFeedback" class="invalid-feedback">
                             {{$errors->first('valor_tipo_gasto')}}
