@@ -31,6 +31,14 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="{{route('centralAtendimento.index')}}" class="nav-link
+                    {!! (Request::is('centralAtendimento*') ? 'active' :"") !!}">
+                        <i class="fas fa-circle nav-icon"></i>
+                        <p>Central de Atendimento</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a href="{{route('modalidade.index')}}" class="nav-link
                     {!! (Request::is('modalidade*') ? 'active' :"") !!}">
                         <i class="fas fa-circle nav-icon"></i>
@@ -43,6 +51,14 @@
                        class="nav-link {!! (Request::is('objeto*') ? 'active' :"") !!}">
                         <i class="fas fa-circle nav-icon"></i>
                         <p>Objeto</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{route('situacao.index')}}"
+                       class="nav-link {!! (Request::is('situacao*') ? 'active' :"") !!}">
+                        <i class="fas fa-circle nav-icon"></i>
+                        <p>Situação de Acompanhamento</p>
                     </a>
                 </li>
 

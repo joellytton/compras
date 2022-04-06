@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProcessoRequest;
+use App\Models\Administracao\AreaAbrangencia;
 use App\Models\Administracao\Modalidade;
 use App\Models\Administracao\Objeto;
 use App\Models\Administracao\TipoGasto;
+use App\Models\Administracao\UnidadesContempladas;
 use App\Models\Processo;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -31,11 +33,16 @@ class ProcessoController extends Controller
         $modalidades = Modalidade::where('status', '=', 'ativo')->get();
         $tiposGastos = TipoGasto::where('status', '=', 'ativo')->get();
         $usuarios = User::where('status', '=', 'ativo')->get();
+        $unidadesContempladas = UnidadesContempladas::where('status', '=', 'ativo')->get();
+        $areasDeAbrangencias = AreaAbrangencia::where('status', '=', 'ativo')->get();
         return view('processos.create', compact(
             'objetos',
             'modalidades',
             'tiposGastos',
-            'usuarios'));
+            'usuarios',
+            'unidadesContempladas',
+            'areasDeAbrangencias'
+        ));
     }
 
     public function store(ProcessoRequest $request): Response

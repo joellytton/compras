@@ -152,10 +152,10 @@
                     class="form-control select2 {{$errors->has('unidades_contempladas_id') ? 'is-invalid' : ''}}"
                     aria-describedby="unidadesContempladasIdFeedback">
                 <option value="">Selecione uma opção</option>
-                @foreach($objetos as $objeto)
-                    <option value="{{$objeto->id}}"
-                            @if(@$processo->unidades_contempladas_id == $objeto->id) selected @endif>
-                        {{$objeto->nome}}
+                @foreach($unidadesContempladas as $unidade)
+                    <option value="{{$unidade->id}}"
+                            @if(@$processo->unidades_contempladas_id == $unidade->id) selected @endif>
+                        {{$unidade->nome}}
                     </option>
                 @endforeach
             </select>
@@ -169,13 +169,13 @@
         <div class="col-sm-12 col-md-6">
             <label for="area_abrangencia_id" class="col-form-label">Área de Abrangência:</label>
             <select name="area_abrangencia_id"
-                    class="form-control select2 {{$errors->has('modalidade_id') ? 'is-invalid' : ''}}"
+                    class="form-control select2 {{$errors->has('area_abrangencia_id') ? 'is-invalid' : ''}}"
                     aria-describedby="area_abrangencia_idFeedback">
                 <option value="">Selecione uma opção</option>
-                @foreach($modalidades as $modalidade)
-                    <option value="{{$modalidade->id}}" @if(@$processo->modalidade_id == $modalidade->id) selected
+                @foreach($areasDeAbrangencias as $area)
+                    <option value="{{$area->id}}" @if(@$processo->area_abrangencia_id == $area->id) selected
                         @endif>
-                        {{$modalidade->nome}}
+                        {{$area->cidade->nome}}
                     </option>
                 @endforeach
             </select>
