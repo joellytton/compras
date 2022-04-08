@@ -6,21 +6,12 @@
 <div class="card-body">
     <div class="form-group row">
         <div class="col-sm-12 col-md-5">
-            <label for="cidade_id" class="col-form-label">Cidade:</label>
-            <select name="cidade_id" class="form-control select2 {{$errors->has('cidade_id') ? 'is-invalid' : ''}}"
-                    aria-describedby="nomeFeedback" style="width: 100%;">
-                <option value="">Selecione uma opção</option>
-                @foreach($cidades as $cidade)
-                    <option value="{{$cidade->id}}"
-                        {{(empty(old('cidade_id')) ? @$areaAbrangencia->cidade_id : old('cidade_id')) == $cidade->id
-                        ? 'selected' : ''}}>
-                        {{$cidade->nome}}
-                    </option>
-                @endforeach
-            </select>
-            @if ($errors->has('cidade_id'))
+            <label for="nome" class="col-form-label">Área de Abrangência:</label>
+            <input type="text" name="nome" class="form-control {{$errors->has('nome') ? 'is-invalid' : ''}}"
+                   aria-describedby="nomeFeedback" value="{{@$areaAbrangencia->nome}}">
+            @if ($errors->has('nome'))
                 <div id="nomeFeedback" class="invalid-feedback">
-                    {{$errors->first('cidade_id')}}
+                    {{$errors->first('nome')}}
                 </div>
             @endif
 

@@ -175,7 +175,7 @@
                 @foreach($areasDeAbrangencias as $area)
                     <option value="{{$area->id}}" @if(@$processo->area_abrangencia_id == $area->id) selected
                         @endif>
-                        {{$area->cidade->nome}}
+                        {{$area->nome}}
                     </option>
                 @endforeach
             </select>

@@ -24,8 +24,7 @@ class AreaAbrangenciaController extends Controller
 
     public function create(): View
     {
-        $cidades = Cidade::where('status', 'ativo')->get();
-        return view('administracao.area_abrangencia.create', compact('cidades'));
+        return view('administracao.area_abrangencia.create');
     }
 
     public function store(AreaAbrangenciaRequest $request): Response
@@ -45,8 +44,7 @@ class AreaAbrangenciaController extends Controller
 
     public function edit(AreaAbrangencia $areaAbrangencia): View
     {
-        $cidades = Cidade::where('status', 'ativo')->get();
-        return view('administracao.area_abrangencia.edit', compact('areaAbrangencia', 'cidades'));
+        return view('administracao.area_abrangencia.edit', compact('areaAbrangencia'));
     }
 
     public function update(AreaAbrangenciaRequest $request, AreaAbrangencia $areaAbrangencia): Response

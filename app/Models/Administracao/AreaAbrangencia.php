@@ -13,7 +13,7 @@ class AreaAbrangencia extends Model
     protected $table = 'areas_abrangencias';
 
     protected $fillable = [
-        'cidade_id',
+        'nome',
         'status',
         'user_cadastro_id',
         'user_alteracao_id',
@@ -23,15 +23,8 @@ class AreaAbrangencia extends Model
 
     protected static function buscar(int $perPage, string $keyword): AbstractPaginator
     {
-        return self::select('areas_abrangencias.*', 'cidades.nome as cidade')
-            ->join('cidades', 'cidades.id', '=', 'areas_abrangencias.cidade_id')
-            ->where('areas_abrangencias.status', 'ativo')
-            ->where('cidades.nome', 'like', "%{$keyword}%")
+        return self::where('status', 'ativo')
+            ->where('nome', 'like', "%{$keyword}%")
             ->paginate($perPage);
-    }
-
-    public function cidade()
-    {
-        return $this->belongsTo(Cidade::class);
     }
 }

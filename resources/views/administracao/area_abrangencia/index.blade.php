@@ -52,7 +52,7 @@
                                 @forelse($areasAbrangencia as $areaAbrangencia)
                                     <tr>
                                         <td>{{$areaAbrangencia->id}}</td>
-                                        <td class="text-center">{{$areaAbrangencia->cidade}}</td>
+                                        <td class="text-center">{{$areaAbrangencia->nome}}</td>
                                         <td class="text-center">
                                             <a href="{{route('areaAbrangencia.edit', $areaAbrangencia->id)}}"
                                                class="btn btn-primary btn-sm mr-1">
