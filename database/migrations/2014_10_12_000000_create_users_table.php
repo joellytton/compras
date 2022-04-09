@@ -19,9 +19,12 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->unsignedBigInteger('perfil_id')->nullable();
             $table->enum('status', ['ativo', 'inativo'])->default('ativo');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('perfil_id')->references('id')->on('perfil');
         });
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Administracao;
 
+use App\Models\Administracao\PessoaFisica;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -19,8 +20,12 @@ class UsuarioRequest extends FormRequest
             'status' => 'ativo',
             'user_cadastro_id' => auth()->user()->id,
             'data_nascimento' => data_br_para_iso($this->data_nascimento),
-            'cpf' => str_replace('-', "", str_replace('.', "", $this->cpf))
+            'cpf' => str_replace('-', "", str_replace('.', "", $this->cpf)),
+            'pessoa_fisica_id' => (empty($this->usuario) ? 0 : PessoaFisica::where('user_id', $this->usuario->id)
+                ->first()
+                ->id),
         ]);
+
         if ($this->method() == 'PUT') {
             $this->merge([
                 'user_alteracao_id' => auth()->user()->id,
@@ -38,9 +43,9 @@ class UsuarioRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'cpf' => 'required|max:14|unique:pessoas_fisicas',
-            'rg' => 'required|max:14|unique:pessoas_fisicas',
+            'email' => 'required|email|max:255|unique:users,email,' . (empty($this->usuario) ? 0 : $this->usuario->id),
+            'cpf' => 'required|max:14|unique:pessoas_fisicas,cpf,' . $this->pessoa_fisica_id,
+            'rg' => 'required|max:14|unique:pessoas_fisicas,rg,' . $this->pessoa_fisica_id,
             'data_nascimento' => 'required',
             'sexo' => 'required',
             'status' => ['required', Rule::in(['ativo', 'inativo'])],

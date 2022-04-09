@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Administracao;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Administracao\UsuarioRequest;
+use App\Models\Administracao\Perfil;
+use App\Models\Administracao\PessoaFisica;
 use App\Models\Administracao\Usuario;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,13 +21,13 @@ class UsuarioController extends Controller
         $keyword = empty($request->search) ? '' : $request->search;
 
         $usuarios = User::buscar($perPage, $keyword);
-
         return view('administracao.usuario.index', compact('usuarios'));
     }
 
     public function create(): View
     {
-        return view('administracao.usuario.create');
+        $perfis = Perfil::all();
+        return view('administracao.usuario.create', compact('perfis'));
     }
 
     public function store(UsuarioRequest $request): Response
@@ -46,12 +48,13 @@ class UsuarioController extends Controller
         return redirect()->route('usuario.index')->with('success', 'Usuário cadastrado com sucesso');
     }
 
-    public function edit(Usuario $usuario): View
+    public function edit(User $usuario): View
     {
-        return view('administracao.usuario.edit', compact('usuario'));
+        $perfis = Perfil::all();
+        return view('administracao.usuario.edit', compact('usuario', 'perfis'));
     }
 
-    public function update(UsuarioRequest $request, Usuario $usuario): Response
+    public function update(UsuarioRequest $request, User $usuario): Response
     {
         DB::beginTransaction();
 
@@ -64,7 +67,7 @@ class UsuarioController extends Controller
         return redirect()->route('usuario.index')->with('success', 'Usuário atualizado com sucesso');
     }
 
-    public function destroy(Usuario $usuario): Response
+    public function destroy(User $usuario): Response
     {
         DB::beginTransaction();
 

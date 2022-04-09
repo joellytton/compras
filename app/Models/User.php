@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Administracao\Perfil;
 use App\Models\Administracao\PessoaFisica;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +19,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'perfil_id',
+        'status',
+        'created_at',
+        'updated_at',
     ];
 
     protected $hidden = [
@@ -31,7 +36,7 @@ class User extends Authenticatable
 
     protected static function buscar(int $perPage, string $keyword): AbstractPaginator
     {
-        return self::with('pessoaFisica')
+        return self::with('pessoaFisica', 'perfil')
             ->where('status', 'ativo')
             ->where('name', 'like', "%{$keyword}%")
             ->paginate($perPage);
@@ -40,5 +45,10 @@ class User extends Authenticatable
     public function pessoaFisica()
     {
         return $this->hasOne(PessoaFisica::class);
+    }
+
+    public function perfil()
+    {
+        return $this->belongsTo(Perfil::class);
     }
 }

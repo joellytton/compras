@@ -46,6 +46,7 @@
                                     <th style="width: 10px">#</th>
                                     <th class="text-center">Nome</th>
                                     <th class="text-center">Email</th>
+                                    <th class="text-center">Perfil</th>
                                     <th class="text-center">Ação</th>
                                 </tr>
                                 </thead>
@@ -55,6 +56,7 @@
                                         <td>{{$usuario->id}}</td>
                                         <td class="text-center">{{$usuario->name}}</td>
                                         <td class="text-center">{{$usuario->email}}</td>
+                                        <td class="text-center">{{$usuario->perfil->nome}}</td>
                                         <td class="text-center">
                                             <a href="{{route('usuario.edit', $usuario->id)}}"
                                                class="btn btn-primary btn-sm mr-1">
