@@ -92,6 +92,9 @@
                                 @endforelse
                                 </tbody>
                             </table>
+                            <div class="card-footer clearfix">
+                                {{ $processos->links() }}
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>

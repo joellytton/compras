@@ -63,7 +63,8 @@
                                                   style="display:inline;">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button class="btn btn-danger btn-sm mr-1">
+                                                <button class="btn btn-danger btn-sm submit mr-1"
+                                                        idform="{{$objeto->id}}">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
@@ -76,6 +77,9 @@
                                 @endforelse
                                 </tbody>
                             </table>
+                            <div class="card-footer clearfix">
+                                {{ $objetos->links() }}
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>

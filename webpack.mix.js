@@ -45,6 +45,7 @@ mix.combine([
     'resources/template/plugins/moment/moment.min.js',
     'resources/template/plugins/inputmask/jquery.inputmask.min.js',
     'resources/template/dist/js/adminlte.js',
+    'resources/js/delete.js',
 ], 'public/js/all.js');
 
 mix.copy('resources/template/dist/img', 'public/img');

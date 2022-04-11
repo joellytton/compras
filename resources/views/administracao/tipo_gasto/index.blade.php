@@ -76,6 +76,9 @@
                                 @endforelse
                                 </tbody>
                             </table>
+                            <div class="card-footer clearfix">
+                                {{ $tiposGastos->links() }}
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>

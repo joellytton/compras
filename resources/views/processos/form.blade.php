@@ -118,10 +118,10 @@
                     class="form-control select2 {{$errors->has('situacao_acompanhamento_id') ? 'is-invalid' : ''}}"
                     aria-describedby="situacaoAcompanhamentoIdFeedback">
                 <option value="">Selecione uma opção</option>
-                @foreach($objetos as $objeto)
-                    <option value="{{$objeto->id}}"
-                            @if(@$processo->situacao_acompanhamento_id == $objeto->id) selected @endif>
-                        {{$objeto->nome}}
+                @foreach($situacoes as $situacao)
+                    <option value="{{$situacao->id}}"
+                            @if(@$processo->situacao_acompanhamento_id == $situacao->id) selected @endif>
+                        {{$situacao->nome}}
                     </option>
                 @endforeach
             </select>
@@ -251,11 +251,11 @@
                             class="form-control select2 {{$errors->has('central_id') ? 'is-invalid' : ''}}"
                             aria-describedby="centralIdFeedback">
                         <option value="">Selecione uma opção</option>
-                        @foreach($modalidades as $modalidade)
-                            <option value="{{$modalidade->id}}"
-                                    @if(@$processo->central_id == $modalidade->id) selected
+                        @foreach($centrais as $central)
+                            <option value="{{$central->id}}"
+                                    @if(@$processo->central_id == $central->id) selected
                                 @endif>
-                                {{$modalidade->nome}}
+                                {{$central->nome}}
                             </option>
                         @endforeach
                     </select>
@@ -308,11 +308,11 @@
                             aria-describedby="tiposGastosIdFeedback">
                         <option value="">Selecione uma opção</option>
                         @foreach($tiposGastos as $tipoGasto)
-                            <option value="{{$tipoGasto->id}}"
+            <option value="{{$tipoGasto->id}}"
                                 @if(@$processo->tipos_gastos_id == $tipoGasto->id) selected @endif>
                                 {{$tipoGasto->nome}}
-                            </option>
-                        @endforeach
+            </option>
+@endforeach
             </select>
         </div>
 
@@ -353,7 +353,6 @@
 
             quantidadeCentral++;
 
-
             let central = `<div class="form-group row">
             <div class="col-sm-12 col-md-8">
                 <label for="central_id" class="col-form-label">Central de Atendimento:</label>
@@ -362,10 +361,9 @@
                         aria-describedby="centralIdFeedback">
                     <option value="">Selecione uma opção</option>'`;
 
-            @foreach($modalidades as $modalidade)
-                central += ` <option value="{{$modalidade->id}}"
-                        @if(@$processo->modalidade_id == $modalidade->id) selected  @endif>
-                            {{$modalidade->nome}}
+            @foreach($centrais as $central)
+                central += ` <option value="{{$central->id}}">
+                            {{$central->nome}}
             </option>`;
             @endforeach
                 central += `</select>
@@ -373,12 +371,17 @@
            <div class="col-sm-12 col-md-1">
                     <label for="valor_tipo_gasto" class="col-form-label">&emsp;</label>
                     <button type="button" class="btn btn-danger btn-flat form-control"
-                    onclick="removeLinha($(this))">
+                    onclick="removeLinhaCentral($(this))">
                      <i class="fas fa-solid fa-trash"></i>
                     </button>
            </div>
         </div>`;
             $(".divCentral").append(central);
+        }
+
+        function removeLinhaCentral(element) {
+            element.parent().parent().remove();
+            quantidadeCentral--;
         }
 
     </script>

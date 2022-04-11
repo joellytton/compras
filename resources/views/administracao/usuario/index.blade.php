@@ -62,24 +62,37 @@
                                                class="btn btn-primary btn-sm mr-1">
                                                 <i class="fas fa-edit"></i>
                                             </a>
+                                            <form action="{{route('redefinirSenhaPadrao', $usuario->id)}}"
+                                                  method="POST" id="formSenha{{$usuario->id}}"
+                                                  style="display:inline;">
+                                                @csrf
+                                                <button class="btn btn-warning btn-sm senha mr-1"
+                                                        idSenha="{{$usuario->id}}">
+                                                    <i class="fas fa-key"></i>
+                                                </button>
+                                            </form>
                                             <form action="{{route('usuario.destroy', $usuario->id)}}"
                                                   method="POST" id="formLaravel{{$usuario->id}}"
                                                   style="display:inline;">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button class="btn btn-danger btn-sm mr-1">
-                                                    <i class="fas fa-trash"></i>
+                                                <button class="btn btn-danger btn-sm submit mr-1"
+                                                        idform="{{$usuario->id}}">
+                                                    <i class=" fas fa-trash"></i>
                                                 </button>
                                             </form>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3" class="text-center">Nenhuma usuário encontrado</td>
+                                        <td colspan="5" class="text-center">Nenhuma usuário encontrado</td>
                                     </tr>
                                 @endforelse
                                 </tbody>
                             </table>
+                            <div class="card-footer clearfix">
+                                {{ $usuarios->links() }}
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -88,3 +101,28 @@
         </div>
     </section>
 @endsection
+
+@push('js')
+    <script>
+        $(window).on("load", function () {
+            $("body").on('click', '.senha', function (e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Você tem certeza ?',
+                    text: "Você não poderá reverter isso!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: "Sim, Redefinir!",
+                    cancelButtonText: "Não, cancele!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var $this = $(this);
+                        document.getElementById("formSenha" + $this.attr("idSenha")).submit();
+                    }
+                })
+            });
+        });
+    </script>
+@endpush

@@ -76,6 +76,9 @@
                                 @endforelse
                                 </tbody>
                             </table>
+                            <div class="card-footer clearfix">
+                                {{ $areasAbrangencia->links() }}
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>

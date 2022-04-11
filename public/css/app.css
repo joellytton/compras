@@ -633,6 +633,9 @@ select {
 .float-right {
   float: right;
 }
+.float-left {
+  float: left;
+}
 .m-0 {
   margin: 0px;
 }
@@ -693,6 +696,9 @@ select {
 }
 .mt-6 {
   margin-top: 1.5rem;
+}
+.ml-0 {
+  margin-left: 0px;
 }
 .mt-3 {
   margin-top: 0.75rem;
@@ -1066,17 +1072,17 @@ select {
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity));
 }
-.text-white {
+.text-green-600 {
   --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
+  color: rgb(22 163 74 / var(--tw-text-opacity));
 }
 .text-indigo-600 {
   --tw-text-opacity: 1;
   color: rgb(79 70 229 / var(--tw-text-opacity));
 }
-.text-green-600 {
+.text-white {
   --tw-text-opacity: 1;
-  color: rgb(22 163 74 / var(--tw-text-opacity));
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 .text-indigo-700 {
   --tw-text-opacity: 1;

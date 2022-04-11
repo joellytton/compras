@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProcessoRequest;
 use App\Models\Administracao\AreaAbrangencia;
+use App\Models\Administracao\CentralAtendimento;
 use App\Models\Administracao\Modalidade;
 use App\Models\Administracao\Objeto;
+use App\Models\Administracao\SituacaoAcompanhamento;
 use App\Models\Administracao\TipoGasto;
 use App\Models\Administracao\UnidadesContempladas;
 use App\Models\Processo;
@@ -35,13 +37,17 @@ class ProcessoController extends Controller
         $usuarios = User::where('status', '=', 'ativo')->get();
         $unidadesContempladas = UnidadesContempladas::where('status', '=', 'ativo')->get();
         $areasDeAbrangencias = AreaAbrangencia::where('status', '=', 'ativo')->get();
+        $situacoes = SituacaoAcompanhamento::where('status', '=', 'ativo')->get();
+        $centrais = CentralAtendimento::where('status', '=', 'ativo')->get();
         return view('processos.create', compact(
             'objetos',
             'modalidades',
             'tiposGastos',
             'usuarios',
             'unidadesContempladas',
-            'areasDeAbrangencias'
+            'areasDeAbrangencias',
+            'situacoes',
+            'centrais'
         ));
     }
 

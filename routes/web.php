@@ -19,17 +19,21 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::group(['middleware' => ['auth', 'verificar.permissao:0']], function () {
     Route::resource('/areaAbrangencia', AreaAbrangenciaController::class)
         ->parameters(['areaAbrangencia' => 'areaAbrangencia']);;
     Route::resource('/centralAtendimento', CentralAtendimentoController::class);
     Route::resource('/modalidade', ModalidadeController::class);
     Route::resource('/objeto', ObjetoController::class);
-    Route::resource('/processo', ProcessoController::class);
+
     Route::resource('/situacao', SituacaoAcompanhamentoController::class);
     Route::resource('/tipoGasto', TipoGastoController::class);
     Route::resource('/usuario', UsuarioController::class);
     Route::resource('/unidadeContempladas', UnidadesContempladasController::class)
         ->parameters(['unidadeContempladas' => 'unidadeContempladas']);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::resource('/processo', ProcessoController::class);
 });
 require __DIR__ . '/auth.php';

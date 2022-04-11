@@ -110,7 +110,7 @@
 </div>
 
 <div class="card-footer">
-    <button type="submit" class="btn btn-primary">Salvar</button>
+    <button type="button" class="btn btn-primary" onclick="submitForm(this);">Salvar</button>
 </div>
 
 @push('js')

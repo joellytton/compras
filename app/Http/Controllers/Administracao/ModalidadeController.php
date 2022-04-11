@@ -12,6 +12,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ModalidadeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('verificar.permissao:2', ['except' => []]);
+    }
 
     public function index(Request $request): View
     {

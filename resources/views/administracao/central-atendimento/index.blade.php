@@ -19,7 +19,6 @@
 
     <section class="content">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-lg-12 text-right mb-4">
                     <div class="card">
@@ -64,7 +63,8 @@
                                                   style="display:inline;">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button class="btn btn-danger btn-sm mr-1">
+                                                <button class="btn btn-danger btn-sm submit mr-1"
+                                                        idform="{{$central-> id}}">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
@@ -77,6 +77,9 @@
                                 @endforelse
                                 </tbody>
                             </table>
+                            <div class="card-footer clearfix">
+                                {{ $centrais->links() }}
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>
