@@ -1,6 +1,7 @@
 @push('css')
     <link rel="stylesheet" href="{{asset('assets/select2/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/summernote/summernote-bs4.css')}}">
 @endpush
 <!-- form start -->
 <div class="card-body">
@@ -275,11 +276,34 @@
     </div>
 </div>
 
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Anotações</h3>
+    </div>
+    <div class="card-body ">
+        <div class="divCentral">
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-12">
+                    <label for="anotacao" class="col-form-label"></label>
+                    <textarea name="anotacao" id="summernote" cols="30" rows="10"></textarea>
+                    @if ($errors->has('central_id'))
+                        <div id="centralIdFeedback" class="invalid-feedback">
+                            {{$errors->first('central_id')}}
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="card-footer">
     <button type="submit" class="btn btn-primary">Salvar</button>
 </div>
 @push('js')
     <script src="{{asset('assets/select2/js/select2.full.js')}}"></script>
+    <script src="{{asset('assets/summernote/summernote-bs4.min.js')}}"></script>
+    <script src="{{asset('assets/summernote/lang/summernote-pt-BR.min.js')}}"></script>
     <script>
         $('.select2').select2({
             theme: 'bootstrap4'
@@ -384,5 +408,9 @@
             quantidadeCentral--;
         }
 
+        $('#summernote').summernote({
+            lang: 'pt-BR',
+            height: 150,
+        });
     </script>
 @endpush
