@@ -28,7 +28,7 @@ class ProcessoRequest extends FormRequest
     public function rules()
     {
         return [
-            'sei' => 'required|max:255',
+            'sei' => 'required|max:100',
             'edital' => 'required|max:30',
             'total_estimado' => 'required',
             'total_homologado' => 'required',

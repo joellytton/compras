@@ -8,7 +8,7 @@
     <div class="form-group row">
         <div class="col-sm-12 col-md-4">
             <label for="sei" class="col-form-label">Sei:</label>
-            <input type="text" name="nome" class="form-control {{$errors->has('sei') ? 'is-invalid' : ''}}"
+            <input type="text" name="sei" class="form-control {{$errors->has('sei') ? 'is-invalid' : ''}}"
                    aria-describedby="seiFeedback" value="{{@$processo->sei}}">
             @if ($errors->has('sei'))
                 <div id="seiFeedback" class="invalid-feedback">
@@ -104,7 +104,7 @@
         <div class="col-sm-12 col-md-4">
             <label for="total_estimado" class="col-form-label">Valor Total Estimado:</label>
             <input type="text" name="total_estimado"
-                   class="form-control {{$errors->has('total_estimado') ? 'is-invalid' : ''}}"
+                   class="form-control money {{$errors->has('total_estimado') ? 'is-invalid' : ''}}"
                    aria-describedby="totalEstimadoFeedback" value="{{@$processo->total_estimado}}">
             @if ($errors->has('total_estimado'))
                 <div id="totalEstimadoFeedback" class="invalid-feedback">
@@ -411,6 +411,20 @@
         $('#summernote').summernote({
             lang: 'pt-BR',
             height: 150,
+        });
+
+        $(document).ready(function () {
+            $(".money").inputmask('decimal', {
+                'alias': 'numeric',
+                'groupSeparator': ',',
+                'autoGroup': true,
+                'digits': 2,
+                'radixPoint': ".",
+                'digitsOptional': false,
+                'allowMinus': false,
+                'prefix': 'R$ ',
+                'placeholder': ''
+            });
         });
     </script>
 @endpush
