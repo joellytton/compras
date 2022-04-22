@@ -31,7 +31,7 @@ class TipoGastoController extends Controller
     {
         DB::beginTransaction();
 
-        if(!TipoGasto::create($request->all())) {
+        if (!TipoGasto::create($request->all())) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Falha ao cadastrar um tipo de gasto!');
         }
@@ -50,7 +50,7 @@ class TipoGastoController extends Controller
     {
         DB::beginTransaction();
 
-        if(!$tipoGasto->update($request->all())) {
+        if (!$tipoGasto->update($request->all())) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Falha ao atualizar um tipo de gasto!');
         }
@@ -64,7 +64,7 @@ class TipoGastoController extends Controller
     {
         DB::beginTransaction();
 
-        if(!$tipoGasto->update(['status' => 'inativo', 'user_alteracao_id' => auth()->user()->id])) {
+        if (!$tipoGasto->update(['status' => 'inativo', 'user_alteracao_id' => auth()->user()->id])) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Falha ao excluir um tipo de gasto!');
         }

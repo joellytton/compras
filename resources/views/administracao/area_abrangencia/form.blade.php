@@ -31,7 +31,7 @@
 </div>
 
 <div class="card-footer">
-    <button type="button" class="btn btn-primary" onclick="submitForm(this);">Salvar</button>
+    <button type="button" class="btn btn-primary" onclick="event.preventDefault(); submitForm(this);">Salvar</button>
 </div>
 @push('js')
     <script src="{{asset('assets/select2/js/select2.full.js')}}"></script>

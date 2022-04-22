@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UnidadesContempladasController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         $perPage = 10;
         $keyword = empty($request->search) ? '' : $request->search;
@@ -52,7 +52,7 @@ class UnidadesContempladasController extends Controller
         DB::beginTransaction();
 
 
-        if(!$unidadeContempladas->update($request->all())) {
+        if (!$unidadeContempladas->update($request->all())) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Falha ao atualizar um tipo de gasto!');
         }
@@ -68,7 +68,7 @@ class UnidadesContempladasController extends Controller
     {
         DB::beginTransaction();
 
-        if(!$unidadeContempladas->update(['status'=> 'inativo', 'user_alteracao_id' => auth()->user()->id])) {
+        if (!$unidadeContempladas->update(['status' => 'inativo', 'user_alteracao_id' => auth()->user()->id])) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Falha ao excluir unidade contemplada!');
         }

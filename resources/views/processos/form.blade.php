@@ -427,5 +427,6 @@
     }
 
     mascaraValor();
+
 </script>
 @endpush

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UsuarioController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         $perPage = 10;
         $keyword = empty($request->search) ? '' : $request->search;
