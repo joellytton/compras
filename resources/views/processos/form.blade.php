@@ -32,7 +32,8 @@
             <label for="data_processo" class="col-form-label">Data:</label>
             <input type="text" name="data_processo"
                 class="form-control {{$errors->has('data_processo') ? 'is-invalid' : ''}}"
-                aria-describedby="dataProcessoFeedback" value="{{@$processo->data_processo}}">
+                aria-describedby="dataProcessoFeedback" value="{{@$processo->data_processo}}"
+                data-inputmask="'mask': '99/99/9999'">
             @if ($errors->has('data_processo'))
             <div id="dataProcessoFeedback" class="invalid-feedback">
                 {{$errors->first('data_processo')}}
@@ -199,7 +200,7 @@
                 <div class="col-sm-12 col-md-4">
                     <label for="tipos_gastos_id" class="col-form-label">Tipo de Gasto:</label>
                     <select name="tipos_gastos_id[]"
-                        class="form-control select2 {{$errors->has('tipos_gastos_id') ? 'is-invalid' : ''}}"
+                        class="form-control select2 {{$errors->has('tipos_gastos_id.*') ? 'is-invalid' : ''}}"
                         aria-describedby="tiposGastosIdFeedback">
                         <option value="">Selecione uma opção</option>
                         @foreach($tiposGastos as $tipoGasto)
@@ -209,10 +210,9 @@
                         </option>
                         @endforeach
                     </select>
-                    {{var_dump($errors)}}
-                    @if ($errors->has('tipos_gastos_id'))
+                    @if ($errors->has('tipos_gastos_id.*'))
                     <div id="tiposGastosIdFeedback" class="invalid-feedback">
-                        {{$errors->first('tipos_gastos_id')}}
+                        {{$errors->first('tipos_gastos_id.*')}}
                     </div>
                     @endif
                 </div>
@@ -249,7 +249,7 @@
                 <div class="col-sm-12 col-md-8">
                     <label for="central_id" class="col-form-label">Central de Atendimento:</label>
                     <select name="central_id[]"
-                        class="form-control select2 {{$errors->has('central_id') ? 'is-invalid' : ''}}"
+                        class="form-control select2 {{$errors->has('central_id.*') ? 'is-invalid' : ''}}"
                         aria-describedby="centralIdFeedback">
                         <option value="">Selecione uma opção</option>
                         @foreach($centrais as $central)
@@ -259,9 +259,9 @@
                         </option>
                         @endforeach
                     </select>
-                    @if ($errors->has('central_id'))
+                    @if ($errors->has('central_id.*'))
                     <div id="centralIdFeedback" class="invalid-feedback">
-                        {{$errors->first('central_id')}}
+                        {{$errors->first('central_id.*')}}
                     </div>
                     @endif
                 </div>
@@ -428,6 +428,10 @@
     }
 
     mascaraValor();
+
+    $(document).ready(function () {
+        $(":input").inputmask();
+    });
 
 </script>
 @endpush

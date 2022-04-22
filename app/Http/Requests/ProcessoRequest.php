@@ -13,7 +13,7 @@ class ProcessoRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        dd($this->all());
+        // dd($this->tipos_gastos_id);
         $this->merge([
             'status' => 'ativo',
             'user_cadastro_id' => auth()->user()->id,
@@ -40,9 +40,10 @@ class ProcessoRequest extends FormRequest
             'tecnico_responsavel_id' => 'required',
             'situacao_acompanhamento_id' => 'required',
             'unidades_contempladas_id' => 'required',
-            'tipos_gastos_id' => 'required|array|max:5',
+            'area_abrangencia_id' => 'required',
+            'tipos_gastos_id.*' => 'required|array|max:5',
             'valor_tipo_gasto' => 'required',
-            'central_id' => 'required|array|max:5',
+            'central_id.*' => 'required|array|max:5',
             'user_cadastro_id' => 'required',
 
         ];
@@ -65,11 +66,12 @@ class ProcessoRequest extends FormRequest
             'tecnico_responsavel_id.required' => 'O campo Técnico Responsável é obrigatório!',
             'situacao_acompanhamento_id.required' => 'O campo Situação é obrigatório!',
             'unidades_contempladas_id.required' => 'O campo Unidades Contempladas é obrigatório!',
-            'tipos_gastos_id.required' => 'O campo Tipo de Gasto é obrigatório!',
+            'area_abrangencia_id.required' => 'O campo Área de Abrangência é obrigatório!',
+            'tipos_gastos_id.*.required' => 'O campo Tipo de Gasto é obrigatório!',
             'valor_tipo_gasto.required' => 'O campo Valor do Tipo de Gasto é obrigatório!',
-            'central_id.required' => 'O campo Central é obrigatório!',
-            'central_id.array' => 'O campo Central deve ser um array!',
-            'central_id.max' => 'O campo Central deve ter no máximo 5 elementos!',
+            'central_id.*.required' => 'O campo Central é obrigatório!',
+            'central_id.*.array' => 'O campo Central deve ser um array!',
+            'central_id.*.max' => 'O campo Central deve ter no máximo 5 elementos!',
             'user_cadastro_id.required' => 'O campo Usuário é obrigatório!',
         ];
     }
