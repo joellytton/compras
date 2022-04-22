@@ -75,11 +75,11 @@ class ProcessoController extends Controller
         return view('processos.edit', compact('compra'));
     }
 
-    public function update(ProcessoRequest $request, Compra $compra): Response
+    public function update(ProcessoRequest $request, Processo $processo): Response
     {
         DB::beginTransaction();
 
-        if (!Processo::update($request->all())) {
+        if (!$processo->update($request->all())) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Erro ao cadastrar um processo!');
         }

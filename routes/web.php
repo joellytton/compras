@@ -21,7 +21,7 @@ Route::get('/dashboard', function () {
 
 Route::group(['middleware' => ['auth', 'verificar.permissao:0']], function () {
     Route::resource('/areaAbrangencia', AreaAbrangenciaController::class)
-        ->parameters(['areaAbrangencia' => 'areaAbrangencia']);;
+        ->parameters(['areaAbrangencia' => 'areaAbrangencia']);
     Route::resource('/centralAtendimento', CentralAtendimentoController::class);
     Route::resource('/modalidade', ModalidadeController::class);
     Route::resource('/objeto', ObjetoController::class);
