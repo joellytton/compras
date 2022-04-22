@@ -209,6 +209,7 @@
                         </option>
                         @endforeach
                     </select>
+                    {{var_dump($errors)}}
                     @if ($errors->has('tipos_gastos_id'))
                     <div id="tiposGastosIdFeedback" class="invalid-feedback">
                         {{$errors->first('tipos_gastos_id')}}

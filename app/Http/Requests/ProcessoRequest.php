@@ -13,6 +13,7 @@ class ProcessoRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        dd($this->all());
         $this->merge([
             'status' => 'ativo',
             'user_cadastro_id' => auth()->user()->id,
@@ -39,9 +40,9 @@ class ProcessoRequest extends FormRequest
             'tecnico_responsavel_id' => 'required',
             'situacao_acompanhamento_id' => 'required',
             'unidades_contempladas_id' => 'required',
-            'tipos_gastos_id' => 'required',
+            'tipos_gastos_id' => 'required|array|max:5',
             'valor_tipo_gasto' => 'required',
-            'central_id' => 'required|array|min:2',
+            'central_id' => 'required|array|max:5',
             'user_cadastro_id' => 'required',
 
         ];
@@ -50,7 +51,26 @@ class ProcessoRequest extends FormRequest
     public function messages()
     {
         return [
-
+            'sei.required' => 'O campo SEI é obrigatório!',
+            'sei.max' => 'O campo SEI deve ter no máximo 100 caracteres!',
+            'edital.required' => 'O campo Edital é obrigatório!',
+            'edital.max' => 'O campo Edital deve ter no máximo 30 caracteres!',
+            'total_estimado.required' => 'O campo Total Estimado é obrigatório!',
+            'total_homologado.required' => 'O campo Total Homologado é obrigatório!',
+            'data_processo.required' => 'O campo Data do Processo é obrigatório!',
+            'data_processo.date' => 'O campo Data do Processo deve ser uma data válida!',
+            'status.required' => 'O campo Status é obrigatório!',
+            'objeto_id.required' => 'O campo Objeto é obrigatório!',
+            'modalidade_id.required' => 'O campo Modalidade é obrigatório!',
+            'tecnico_responsavel_id.required' => 'O campo Técnico Responsável é obrigatório!',
+            'situacao_acompanhamento_id.required' => 'O campo Situação é obrigatório!',
+            'unidades_contempladas_id.required' => 'O campo Unidades Contempladas é obrigatório!',
+            'tipos_gastos_id.required' => 'O campo Tipo de Gasto é obrigatório!',
+            'valor_tipo_gasto.required' => 'O campo Valor do Tipo de Gasto é obrigatório!',
+            'central_id.required' => 'O campo Central é obrigatório!',
+            'central_id.array' => 'O campo Central deve ser um array!',
+            'central_id.max' => 'O campo Central deve ter no máximo 5 elementos!',
+            'user_cadastro_id.required' => 'O campo Usuário é obrigatório!',
         ];
     }
 }
