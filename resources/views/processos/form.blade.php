@@ -9,7 +9,7 @@
         <div class="col-sm-12 col-md-4">
             <label for="sei" class="col-form-label">Sei:</label>
             <input type="text" name="sei" class="form-control {{$errors->has('sei') ? 'is-invalid' : ''}}"
-                aria-describedby="seiFeedback" value="{{@$processo->sei}}">
+                aria-describedby="seiFeedback" value="{{empty(old('sei')) ? @$processo->sei : old('sei')}}">
             @if ($errors->has('sei'))
             <div id="seiFeedback" class="invalid-feedback">
                 {{$errors->first('sei')}}
@@ -20,7 +20,7 @@
         <div class="col-sm-12 col-md-4">
             <label for="edital" class="col-form-label">Nº do Edital:</label>
             <input type="text" name="edital" class="form-control {{$errors->has('edital') ? 'is-invalid' : ''}}"
-                aria-describedby="editalFeedback" value="{{@$processo->edital}}">
+                aria-describedby="editalFeedback" value="{{empty(old('edital')) ? @$processo->edital : old('edital')}}">
             @if ($errors->has('edital'))
             <div id="editalFeedback" class="invalid-feedback">
                 {{$errors->first('edital')}}
@@ -32,7 +32,8 @@
             <label for="data_processo" class="col-form-label">Data:</label>
             <input type="text" name="data_processo"
                 class="form-control {{$errors->has('data_processo') ? 'is-invalid' : ''}}"
-                aria-describedby="dataProcessoFeedback" value="{{@$processo->data_processo}}"
+                aria-describedby="dataProcessoFeedback"
+                value="{{empty(old('data_processo')) ?  @$processo->data_processo : old('data_processo')}}"
                 data-inputmask="'mask': '99/99/9999'">
             @if ($errors->has('data_processo'))
             <div id="dataProcessoFeedback" class="invalid-feedback">
@@ -48,7 +49,8 @@
             <select name="objeto_id" class="form-control select2 {{$errors->has('objeto_id') ? 'is-invalid' : ''}}">
                 <option value="">Selecione uma opção</option>
                 @foreach($objetos as $objeto)
-                <option value="{{$objeto->id}}" @if(@$tipoGasto->objeto_id == $objeto->id) selected @endif>
+                <option value="{{$objeto->id}}"
+                    {{(empty(old('objeto_id')) ? @$processo->objeto_id : old('objeto_id')) == $objeto->id ? 'selected' : ''}}>
                     {{$objeto->nome}}
                 </option>
                 @endforeach
@@ -67,8 +69,8 @@
                 aria-describedby="modalidadeIdFeedback">
                 <option value="">Selecione uma opção</option>
                 @foreach($modalidades as $modalidade)
-                <option value="{{$modalidade->id}}" @if(@$processo->modalidade_id == $modalidade->id) selected
-                    @endif>
+                <option value="{{$modalidade->id}}"
+                    {{(empty(old('modalidade_id')) ? @$processo->modalidade_id : old('modalidade_id')) == $modalidade->id ? 'selected' : ''}}>
                     {{$modalidade->nome}}
                 </option>
                 @endforeach
@@ -87,8 +89,8 @@
                 aria-describedby="tecnicoResponsavelIdFeedback">
                 <option value="">Selecione uma opção</option>
                 @foreach($usuarios as $usuario)
-                <option value="{{$usuario->id}}" @if(@$processo->tecnico_responsavel_id == $usuario->id) selected
-                    @endif>
+                <option value="{{$usuario->id}}"
+                    {{(empty(old('tecnico_responsavel_id')) ? @$processo->tecnico_responsavel_id : old('tecnico_responsavel_id')) == $usuario->id ? 'selected' : ''}}>
                     {{$usuario->name}}
                 </option>
                 @endforeach
@@ -106,7 +108,8 @@
             <label for="total_estimado" class="col-form-label">Valor Total Estimado:</label>
             <input type="text" name="total_estimado"
                 class="form-control money {{$errors->has('total_estimado') ? 'is-invalid' : ''}}"
-                aria-describedby="totalEstimadoFeedback" value="{{@$processo->total_estimado}}">
+                aria-describedby="totalEstimadoFeedback"
+                value="{{empty(old('total_estimado')) ?  numero_iso_para_br(@$processo->total_estimado) : numero_iso_para_br(old('total_estimado'))}}">
             @if ($errors->has('total_estimado'))
             <div id="totalEstimadoFeedback" class="invalid-feedback">
                 {{$errors->first('total_estimado')}}
@@ -121,8 +124,8 @@
                 aria-describedby="situacaoAcompanhamentoIdFeedback">
                 <option value="">Selecione uma opção</option>
                 @foreach($situacoes as $situacao)
-                <option value="{{$situacao->id}}" @if(@$processo->situacao_acompanhamento_id == $situacao->id) selected
-                    @endif>
+                <option value="{{$situacao->id}}"
+                    {{(empty(old('situacao_acompanhamento_id')) ? @$processo->situacao_acompanhamento_id : old('situacao_acompanhamento_id')) == $situacao->id ? 'selected' : ''}}>
                     {{$situacao->nome}}
                 </option>
                 @endforeach
@@ -138,7 +141,8 @@
             <label for="total_homologado" class="col-form-label">Valor Total Homologado:</label>
             <input type="text" name="total_homologado"
                 class="form-control money {{$errors->has('total_homologado') ? 'is-invalid' : ''}}"
-                aria-describedby="totalHomologadoFeedback" value="{{@$processo->total_homologado}}">
+                aria-describedby="totalHomologadoFeedback"
+                value="{{empty(old('total_homologado')) ? numero_iso_para_br(@$processo->total_homologado) : numero_iso_para_br(old('total_homologado'))}}">
             @if ($errors->has('total_homologado'))
             <div id="totalHomologadoFeedback" class="invalid-feedback">
                 {{$errors->first('total_homologado')}}
@@ -155,8 +159,8 @@
                 aria-describedby="unidadesContempladasIdFeedback">
                 <option value="">Selecione uma opção</option>
                 @foreach($unidadesContempladas as $unidade)
-                <option value="{{$unidade->id}}" @if(@$processo->unidades_contempladas_id == $unidade->id) selected
-                    @endif>
+                <option value="{{$unidade->id}}"
+                    {{(empty(old('unidades_contempladas_id')) ? @$processo->unidades_contempladas_id : old('unidades_contempladas_id')) == $unidade->id ? 'selected' : ''}}>
                     {{$unidade->nome}}
                 </option>
                 @endforeach
@@ -175,8 +179,8 @@
                 aria-describedby="area_abrangencia_idFeedback">
                 <option value="">Selecione uma opção</option>
                 @foreach($areasDeAbrangencias as $area)
-                <option value="{{$area->id}}" @if(@$processo->area_abrangencia_id == $area->id) selected
-                    @endif>
+                <option value="{{$area->id}}"
+                    {{(empty(old('area_abrangencia_id')) ? @$processo->area_abrangencia_id : old('area_abrangencia_id')) == $area->id ? 'selected' : ''}}>
                     {{$area->nome}}
                 </option>
                 @endforeach
@@ -204,8 +208,7 @@
                         aria-describedby="tiposGastosIdFeedback">
                         <option value="">Selecione uma opção</option>
                         @foreach($tiposGastos as $tipoGasto)
-                        <option value="{{$tipoGasto->id}}" @if(@$processo->tipos_gastos_id == $tipoGasto->id) selected
-                            @endif>
+                        <option value="{{$tipoGasto->id}}">
                             {{$tipoGasto->nome}}
                         </option>
                         @endforeach
@@ -284,7 +287,7 @@
             <div class="form-group row">
                 <div class="col-sm-12 col-md-12">
                     <label for="anotacao" class="col-form-label"></label>
-                    <textarea name="anotacao" id="summernote" cols="30" rows="10"></textarea>
+                    <textarea name="anotacao" id="summernote" cols="30" rows="10">{{old('anotacao')}}</textarea>
                     @if ($errors->has('central_id'))
                     <div id="centralIdFeedback" class="invalid-feedback">
                         {{$errors->first('central_id')}}
@@ -303,6 +306,7 @@
 <script src="{{asset('assets/select2/js/select2.full.js')}}"></script>
 <script src="{{asset('assets/summernote/summernote-bs4.min.js')}}"></script>
 <script src="{{asset('assets/summernote/lang/summernote-pt-BR.min.js')}}"></script>
+<script src="{{asset('assets/plentz-jquery-maskmoney/dist/jquery.maskMoney.min.js')}}"></script>
 <script>
     $('.select2').select2({
         theme: 'bootstrap4'
@@ -353,7 +357,7 @@
         </div>
     </div>`;
         $('.divTipoGasto').append(html);
-        mascaraValor();
+        $(".money").maskMoney({allowNegative: true, thousands:'.', decimal:',', affixesStay: false});
     }
 
     function removeLinhaTipoGasto(element) {
@@ -414,7 +418,7 @@
     });
 
     function mascaraValor() {
-        $(".money").inputmask('decimal', {
+        $("body").find('.money').inputmask('decimal', {
             radixPoint: ",",
             groupSeparator: ".",
             // autoGroup: true,
@@ -427,10 +431,24 @@
         });
     }
 
-    mascaraValor();
+    // 
 
     $(document).ready(function () {
         $(":input").inputmask();
+
+        $(".money").maskMoney({allowNegative: true, thousands:'.', decimal:',', affixesStay: false});
+
+        // $("body").find('.money').inputmask('decimal', {
+        //     radixPoint: ",",
+        //     groupSeparator: ".",
+        //     // autoGroup: true,
+        //     allowMinus: false,
+        //     digits: 2,
+        //     digitsOptional: false,
+        //     rightAlign: true,
+        //     unmaskAsNumber: true,
+        //     removeMaskOnSubmit: true
+        // });
     });
 
 </script>

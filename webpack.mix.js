@@ -53,3 +53,4 @@ mix.copy('resources/template/plugins/fontawesome-free/webfonts', 'public/webfont
 mix.copy('resources/template/plugins/summernote', 'public/assets/summernote');
 mix.copy('resources/template/plugins/select2', 'public/assets/select2');
 mix.copy('resources/template/plugins/select2-bootstrap4-theme', 'public/assets/select2-bootstrap4-theme');
+mix.copy('resources/template/plugins/plentz-jquery-maskmoney', 'public/assets/plentz-jquery-maskmoney');

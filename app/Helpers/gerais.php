@@ -13,3 +13,17 @@ if (!function_exists('data_iso_para_br')) {
     }
 }
 
+if (!function_exists('numero_iso_para_br')) {
+    function numero_iso_para_br($numero)
+    {
+        return number_format($numero, '2', ',', '.');
+    }
+}
+
+
+if (!function_exists('numero_br_para_iso')) {
+    function numero_br_para_iso($numero)
+    {
+        return str_replace(['.', ','], ['', '.'], $numero);
+    }
+}
