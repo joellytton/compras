@@ -55,9 +55,16 @@ class ProcessoController extends Controller
     {
         DB::beginTransaction();
 
-        if (!Processo::create($request->all())) {
+        $processo = Processo::create($request->all());
+
+        if (!$processo) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Erro ao cadastrar um processo!');
+        }
+
+        if (!$processo->anotacoes->create($request->all())) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Erro ao cadastrar as anotações do processo!');
         }
 
         DB::commit();

@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\AbstractPaginator;
+use App\Models\Administracao\ProcessoAnotacao;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Processo extends Model
 {
@@ -30,5 +31,15 @@ class Processo extends Model
     protected static function buscar(int $perPage, string $keyword): AbstractPaginator
     {
         return self::where('edital', 'like', "%{$keyword}%")->paginate($perPage);
+    }
+
+    public function anotacoes()
+    {
+        return $this->hasMany(ProcessoAnotacao::class);
+    }
+
+    public function tiposGastos()
+    {
+        return $this->belongsToMany(TipoGasto::class, 'processos_tipos_gastos');
     }
 }
