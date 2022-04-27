@@ -62,9 +62,29 @@ class ProcessoController extends Controller
             return redirect()->back()->with('error', 'Erro ao cadastrar um processo!');
         }
 
-        if (!$processo->anotacoes->create($request->all())) {
+        if (!$processo->areaAbrangencia()->sync($request->area_abrangencia_id)) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Erro ao cadastrar uma area de abrangência processo!');
+        }
+
+        if (!$processo->unidade()->sync($request->unidades_contempladas_id)) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Erro ao cadastrar uma unidade contemplada!');
+        }
+
+        if (!$processo->anotacoes()->create($request->all())) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Erro ao cadastrar as anotações do processo!');
+        }
+
+        if (!$processo->tiposGastos()->sync($request->tipos_gastos_id)) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Erro ao cadastrar os tipos de gastos do processo!');
+        }
+
+        if (!$processo->centrais()->sync($request->central_id)) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Erro ao cadastrar os tipos de gastos do processo!');
         }
 
         DB::commit();

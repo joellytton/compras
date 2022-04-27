@@ -13,11 +13,20 @@ class ProcessoRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        // dd($this->tipos_gastos_id);
         $this->merge([
             'status' => 'ativo',
             'user_cadastro_id' => auth()->user()->id,
+            'total_estimado' => numero_br_para_iso($this->total_estimado),
+            'total_homologado' => numero_br_para_iso($this->total_homologado),
+
         ]);
+
+        foreach ($this->valor_tipo_gasto as $key => $valor) {
+            $arrayValor = array();
+            $arrayValor[$key] = numero_br_para_iso($valor);
+        }
+
+        $this->merge(['valor_tipo_gasto' => $arrayValor]);
 
         if ($this->method() == 'PUT') {
             $this->merge([
@@ -41,11 +50,10 @@ class ProcessoRequest extends FormRequest
             'situacao_acompanhamento_id' => 'required',
             'unidades_contempladas_id' => 'required',
             'area_abrangencia_id' => 'required',
-            'tipos_gastos_id.*' => 'required|array|max:5',
+            'tipos_gastos_id.*' => 'required',
             'valor_tipo_gasto' => 'required',
-            'central_id.*' => 'required|array|max:5',
+            'central_id.*' => 'required',
             'user_cadastro_id' => 'required',
-
         ];
     }
 

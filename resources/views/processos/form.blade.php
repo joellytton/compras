@@ -109,7 +109,7 @@
             <input type="text" name="total_estimado"
                 class="form-control money {{$errors->has('total_estimado') ? 'is-invalid' : ''}}"
                 aria-describedby="totalEstimadoFeedback"
-                value="{{empty(old('total_estimado')) ?  numero_iso_para_br(@$processo->total_estimado) : numero_iso_para_br(old('total_estimado'))}}">
+                value="{{empty(old('total_estimado')) ? @$processo->total_estimado : old('total_estimado')}}">
             @if ($errors->has('total_estimado'))
             <div id="totalEstimadoFeedback" class="invalid-feedback">
                 {{$errors->first('total_estimado')}}
@@ -142,7 +142,7 @@
             <input type="text" name="total_homologado"
                 class="form-control money {{$errors->has('total_homologado') ? 'is-invalid' : ''}}"
                 aria-describedby="totalHomologadoFeedback"
-                value="{{empty(old('total_homologado')) ? numero_iso_para_br(@$processo->total_homologado) : numero_iso_para_br(old('total_homologado'))}}">
+                value="{{empty(old('total_homologado')) ? @$processo->total_homologado : old('total_homologado')}}">
             @if ($errors->has('total_homologado'))
             <div id="totalHomologadoFeedback" class="invalid-feedback">
                 {{$errors->first('total_homologado')}}
@@ -222,7 +222,7 @@
 
                 <div class="col-sm-12 col-md-4">
                     <label for="valor_tipo_gasto" class="col-form-label">Valor do Tipo de Gasto:</label>
-                    <input type="text" name="valor_tipo_gasto"
+                    <input type="text" name="valor_tipo_gasto[]"
                         class="form-control money {{$errors->has('valor_tipo_gasto') ? 'is-invalid' : ''}}"
                         aria-describedby="valorTipoGastoFeedback" value="">
                     @if ($errors->has('valor_tipo_gasto'))
@@ -283,17 +283,15 @@
         <h3 class="card-title">Anotações</h3>
     </div>
     <div class="card-body ">
-        <div class="divCentral">
-            <div class="form-group row">
-                <div class="col-sm-12 col-md-12">
-                    <label for="anotacao" class="col-form-label"></label>
-                    <textarea name="anotacao" id="summernote" cols="30" rows="10">{{old('anotacao')}}</textarea>
-                    @if ($errors->has('central_id'))
-                    <div id="centralIdFeedback" class="invalid-feedback">
-                        {{$errors->first('central_id')}}
-                    </div>
-                    @endif
+        <div class="form-group row">
+            <div class="col-sm-12 col-md-12">
+                <label for="descricao" class="col-form-label"></label>
+                <textarea name="descricao" id="summernote" cols="30" rows="10">{{old('descricao')}}</textarea>
+                @if ($errors->has('descricao'))
+                <div id="descricaoFeedback" class="invalid-feedback">
+                    {{$errors->first('descricao')}}
                 </div>
+                @endif
             </div>
         </div>
     </div>
@@ -329,7 +327,7 @@
         var html = `
             <div class="form-group row">
                 <div class="col-sm-12 col-md-4">
-                    <label for="nome" class="col-form-label">Tipo de Gasto:</label>
+                    <label for="tipos_gastos_id" class="col-form-label">Tipo de Gasto:</label>
                         <select name="tipos_gastos_id[]"
                             class="form-control select2 {{$errors->has('tipos_gastos_id') ? 'is-invalid' : ''}}"
                             aria-describedby="tiposGastosIdFeedback">
@@ -345,7 +343,7 @@
 
         <div class="col-sm-12 col-md-4">
             <label for="valor_tipo_gasto" class="col-form-label">Valor do Tipo de Gasto:</label>
-            <input type="text" name="valor_tipo_gasto"
+            <input type="text" name="valor_tipo_gasto[]"
             class="form-control money" aria-describedby="valorTipoGastoFeedback" value="">
         </div>
         <div class="col-sm-12 col-md-1">
@@ -357,7 +355,12 @@
         </div>
     </div>`;
         $('.divTipoGasto').append(html);
-        $(".money").maskMoney({allowNegative: true, thousands:'.', decimal:',', affixesStay: false});
+        $(".money").maskMoney({
+            allowNegative: true,
+            thousands: '.',
+            decimal: ',',
+            affixesStay: false
+        });
     }
 
     function removeLinhaTipoGasto(element) {
@@ -436,7 +439,12 @@
     $(document).ready(function () {
         $(":input").inputmask();
 
-        $(".money").maskMoney({allowNegative: true, thousands:'.', decimal:',', affixesStay: false});
+        $(".money").maskMoney({
+            allowNegative: true,
+            thousands: '.',
+            decimal: ',',
+            affixesStay: false
+        });
 
         // $("body").find('.money').inputmask('decimal', {
         //     radixPoint: ",",

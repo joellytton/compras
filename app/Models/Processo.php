@@ -2,9 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Administracao\TipoGasto;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Administracao\Modalidade;
 use Illuminate\Pagination\AbstractPaginator;
+use App\Models\Administracao\AreaAbrangencia;
 use App\Models\Administracao\ProcessoAnotacao;
+use App\Models\Administracao\CentralAtendimento;
+use App\Models\Administracao\UnidadesContempladas;
+use App\Models\Administracao\SituacaoAcompanhamento;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Processo extends Model
@@ -40,6 +46,51 @@ class Processo extends Model
 
     public function tiposGastos()
     {
-        return $this->belongsToMany(TipoGasto::class, 'processos_tipos_gastos');
+        return $this->belongsToMany(TipoGasto::class, 'processos_tipos_gastos', 'processo_id', 'tipos_gastos_id');
+    }
+
+    public function centrais()
+    {
+        return $this->belongsToMany(
+            CentralAtendimento::class,
+            'central_atendimento_processos',
+            'processo_id',
+            'central_atendimento_id'
+        );
+    }
+
+    public function areaAbrangencia()
+    {
+        return $this->belongsToMany(
+            AreaAbrangencia::class,
+            'areas_abrangencias_processos',
+            'processo_id',
+            'area_abrangencia_id'
+        );
+    }
+
+    public function unidade()
+    {
+        return $this->belongsToMany(
+            UnidadesContempladas::class,
+            'processo_unidade',
+            'processo_id',
+            'unidades_contempladas_id'
+        );
+    }
+
+    public function modalidade()
+    {
+        return $this->belongsTo(Modalidade::class);
+    }
+
+    public function tecnicoResponsavel()
+    {
+        return $this->belongsTo(User::class, 'tecnico_responsavel_id', 'id');
+    }
+
+    public function situacaoAcompanhamento()
+    {
+        return $this->belongsTo(SituacaoAcompanhamento::class);
     }
 }
