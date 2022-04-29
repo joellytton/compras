@@ -160,7 +160,7 @@
                 <option value="">Selecione uma opção</option>
                 @foreach($unidadesContempladas as $unidade)
                 <option value="{{$unidade->id}}"
-                    {{(empty(old('unidades_contempladas_id')) ? @$processo->unidades_contempladas_id : old('unidades_contempladas_id')) == $unidade->id ? 'selected' : ''}}>
+                    {{(empty(old('unidades_contempladas_id')) ? @$processo->unidade[0]->id : old('unidades_contempladas_id')) == $unidade->id ? 'selected' : ''}}>
                     {{$unidade->nome}}
                 </option>
                 @endforeach
@@ -180,7 +180,7 @@
                 <option value="">Selecione uma opção</option>
                 @foreach($areasDeAbrangencias as $area)
                 <option value="{{$area->id}}"
-                    {{(empty(old('area_abrangencia_id')) ? @$processo->area_abrangencia_id : old('area_abrangencia_id')) == $area->id ? 'selected' : ''}}>
+                    {{(empty(old('area_abrangencia_id')) ? @$processo->areaAbrangencia[0]->id : old('area_abrangencia_id')) == $area->id ? 'selected' : ''}}>
                     {{$area->nome}}
                 </option>
                 @endforeach

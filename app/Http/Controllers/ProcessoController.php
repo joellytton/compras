@@ -97,9 +97,28 @@ class ProcessoController extends Controller
         return view('processos.show', compact('processo'));
     }
 
-    public function edit(Compra $compra): View
+    public function edit(Processo $processo): View
     {
-        return view('processos.edit', compact('compra'));
+        $objetos = Objeto::where('status', '=', 'ativo')->get();
+        $modalidades = Modalidade::where('status', '=', 'ativo')->get();
+        $tiposGastos = TipoGasto::where('status', '=', 'ativo')->get();
+        $usuarios = User::where('status', '=', 'ativo')->get();
+        $unidadesContempladas = UnidadesContempladas::where('status', '=', 'ativo')->get();
+        $areasDeAbrangencias = AreaAbrangencia::where('status', '=', 'ativo')->get();
+        $situacoes = SituacaoAcompanhamento::where('status', '=', 'ativo')->get();
+        $centrais = CentralAtendimento::where('status', '=', 'ativo')->get();
+
+        return view('processos.edit', compact(
+            'processo',
+            'objetos',
+            'modalidades',
+            'tiposGastos',
+            'usuarios',
+            'unidadesContempladas',
+            'areasDeAbrangencias',
+            'situacoes',
+            'centrais'
+        ));
     }
 
     public function update(ProcessoRequest $request, Processo $processo): Response
