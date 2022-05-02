@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('processo_id');
             $table->unsignedBigInteger('tipos_gastos_id');
+            $table->decimal('valor_tipo_gasto', 15, 2);
             $table->timestamps();
 
             $table->foreign('tipos_gastos_id')->references('id')->on('tipos_gastos');

@@ -109,7 +109,7 @@
             <input type="text" name="total_estimado"
                 class="form-control money {{$errors->has('total_estimado') ? 'is-invalid' : ''}}"
                 aria-describedby="totalEstimadoFeedback"
-                value="{{empty(old('total_estimado')) ? @$processo->total_estimado : old('total_estimado')}}">
+                value="{{empty(old('total_estimado')) ? numero_iso_para_br(@$processo->total_estimado) : old('total_estimado')}}">
             @if ($errors->has('total_estimado'))
             <div id="totalEstimadoFeedback" class="invalid-feedback">
                 {{$errors->first('total_estimado')}}
@@ -142,7 +142,7 @@
             <input type="text" name="total_homologado"
                 class="form-control money {{$errors->has('total_homologado') ? 'is-invalid' : ''}}"
                 aria-describedby="totalHomologadoFeedback"
-                value="{{empty(old('total_homologado')) ? @$processo->total_homologado : old('total_homologado')}}">
+                value="{{empty(old('total_homologado')) ? numero_iso_para_br(@$processo->total_homologado) : old('total_homologado')}}">
             @if ($errors->has('total_homologado'))
             <div id="totalHomologadoFeedback" class="invalid-feedback">
                 {{$errors->first('total_homologado')}}
@@ -200,6 +200,79 @@
     </div>
     <div class="card-body">
         <div class="divTipoGasto">
+            @if (!empty(old('tipos_gastos_id')))
+            @foreach (old('tipos_gastos_id') as $key => $processoTipo)
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-4">
+                    <label for="tipos_gastos_id" class="col-form-label">Tipo de Gasto:</label>
+                    <select name="tipos_gastos_id[]"
+                        class="form-control select2 {{$errors->has('tipos_gastos_id.*') ? 'is-invalid' : ''}}"
+                        aria-describedby="tiposGastosIdFeedback">
+                        <option value="">Selecione uma opção</option>
+                        @foreach($tiposGastos as $tipoGasto)
+                        <option value="{{$tipoGasto->id}}" {{$processoTipo == $tipoGasto->id ? 'selected' : ''}}>
+                            {{$tipoGasto->nome}}
+                        </option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('tipos_gastos_id.*'))
+                    <div id="tiposGastosIdFeedback" class="invalid-feedback">
+                        {{$errors->first('tipos_gastos_id.*')}}
+                    </div>
+                    @endif
+                </div>
+
+                <div class="col-sm-12 col-md-4">
+                    <label for="valor_tipo_gasto" class="col-form-label">Valor do Tipo de Gasto:</label>
+                    <input type="text" name="valor_tipo_gasto[]"
+                        class="form-control money {{$errors->has('valor_tipo_gasto') ? 'is-invalid' : ''}}"
+                        aria-describedby="valorTipoGastoFeedback" value="{{old('valor_tipo_gasto')[$key]}}">
+                    @if ($errors->has('valor_tipo_gasto'))
+                    <div id="valorTipoGastoFeedback" class="invalid-feedback">
+                        {{$errors->first('valor_tipo_gasto')}}
+                    </div>
+                    @endif
+                </div>
+            </div>
+            @endforeach
+            @else
+            @if (!empty($processo->tiposGastos))
+            @foreach ($processo->tiposGastos as $processoTipo)
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-4">
+                    <label for="tipos_gastos_id" class="col-form-label">Tipo de Gasto:</label>
+                    <select name="tipos_gastos_id[]"
+                        class="form-control select2 {{$errors->has('tipos_gastos_id.*') ? 'is-invalid' : ''}}"
+                        aria-describedby="tiposGastosIdFeedback">
+                        <option value="">Selecione uma opção</option>
+                        @foreach($tiposGastos as $tipoGasto)
+                        <option value="{{$tipoGasto->id}}" {{$processoTipo->id == $tipoGasto->id ? 'selected' : ''}}>
+                            {{$tipoGasto->nome}}
+                        </option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('tipos_gastos_id.*'))
+                    <div id="tiposGastosIdFeedback" class="invalid-feedback">
+                        {{$errors->first('tipos_gastos_id.*')}}
+                    </div>
+                    @endif
+                </div>
+
+                <div class="col-sm-12 col-md-4">
+                    <label for="valor_tipo_gasto" class="col-form-label">Valor do Tipo de Gasto:</label>
+                    <input type="text" name="valor_tipo_gasto[]"
+                        class="form-control money {{$errors->has('valor_tipo_gasto') ? 'is-invalid' : ''}}"
+                        aria-describedby="valorTipoGastoFeedback"
+                        value="{{numero_iso_para_br($processoTipo->pivot->valor_tipo_gasto)}}">
+                    @if ($errors->has('valor_tipo_gasto'))
+                    <div id="valorTipoGastoFeedback" class="invalid-feedback">
+                        {{$errors->first('valor_tipo_gasto')}}
+                    </div>
+                    @endif
+                </div>
+            </div>
+            @endforeach
+            @else
             <div class="form-group row">
                 <div class="col-sm-12 col-md-4">
                     <label for="tipos_gastos_id" class="col-form-label">Tipo de Gasto:</label>
@@ -232,6 +305,8 @@
                     @endif
                 </div>
             </div>
+            @endif
+            @endif
         </div>
 
         <div class="form-group row">
@@ -248,6 +323,8 @@
     </div>
     <div class="card-body ">
         <div class="divCentral">
+            @if (!empty(old('central_id')))
+            @foreach (old('central_id') as $processoCentral)
             <div class="form-group row">
                 <div class="col-sm-12 col-md-8">
                     <label for="central_id" class="col-form-label">Central de Atendimento:</label>
@@ -256,7 +333,7 @@
                         aria-describedby="centralIdFeedback">
                         <option value="">Selecione uma opção</option>
                         @foreach($centrais as $central)
-                        <option value="{{$central->id}}" @if(@$processo->central_id == $central->id) selected
+                        <option value="{{$central->id}}" @if(@$processoCentral==$central->id) selected
                             @endif>
                             {{$central->nome}}
                         </option>
@@ -269,6 +346,58 @@
                     @endif
                 </div>
             </div>
+            @endforeach
+
+            @else
+            @if (!empty($processo->centrais))
+            @foreach ($processo->centrais as $processoCentral)
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-8">
+                    <label for="central_id" class="col-form-label">Central de Atendimento:</label>
+                    <select name="central_id[]"
+                        class="form-control select2 {{$errors->has('central_id.*') ? 'is-invalid' : ''}}"
+                        aria-describedby="centralIdFeedback">
+                        <option value="">Selecione uma opção</option>
+                        @foreach($centrais as $central)
+                        <option value="{{$central->id}}" {{$processoCentral->id == $central->id ? 'selected' : ''}}>
+                            {{$central->nome}}
+                        </option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('central_id.*'))
+                    <div id="centralIdFeedback" class="invalid-feedback">
+                        {{$errors->first('central_id.*')}}
+                    </div>
+                    @endif
+                </div>
+            </div>
+            @endforeach
+
+            @else
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-8">
+                    <label for="central_id" class="col-form-label">Central de Atendimento:</label>
+                    <select name="central_id[]"
+                        class="form-control select2 {{$errors->has('central_id.*') ? 'is-invalid' : ''}}"
+                        aria-describedby="centralIdFeedback">
+                        <option value="">Selecione uma opção</option>
+                        @foreach($centrais as $central)
+                        <option value="{{$central->id}}">
+                            {{$central->nome}}
+                        </option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('central_id.*'))
+                    <div id="centralIdFeedback" class="invalid-feedback">
+                        {{$errors->first('central_id.*')}}
+                    </div>
+                    @endif
+                </div>
+            </div>
+
+            @endif
+            @endif
+
         </div>
         <div class="form-group row">
             <div class="col-sm-12 col-md-12">

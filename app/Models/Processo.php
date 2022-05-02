@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Models\Administracao\TipoGasto;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Administracao\Modalidade;
@@ -9,6 +10,7 @@ use Illuminate\Pagination\AbstractPaginator;
 use App\Models\Administracao\AreaAbrangencia;
 use App\Models\Administracao\ProcessoAnotacao;
 use App\Models\Administracao\CentralAtendimento;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Models\Administracao\UnidadesContempladas;
 use App\Models\Administracao\SituacaoAcompanhamento;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -34,6 +36,14 @@ class Processo extends Model
         'updated_at'
     ];
 
+    protected function dataProcesso(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) =>  Carbon::parse($value)->format('d/m/Y'),
+            set: fn ($value) =>  Carbon::parse($value)->format('Y-m-d'),
+        );
+    }
+
     protected static function buscar(int $perPage, string $keyword): AbstractPaginator
     {
         return self::where('edital', 'like', "%{$keyword}%")->paginate($perPage);
@@ -46,7 +56,8 @@ class Processo extends Model
 
     public function tiposGastos()
     {
-        return $this->belongsToMany(TipoGasto::class, 'processos_tipos_gastos', 'processo_id', 'tipos_gastos_id');
+        return $this->belongsToMany(TipoGasto::class, 'processos_tipos_gastos', 'processo_id', 'tipos_gastos_id')
+        ->withPivot('valor_tipo_gasto', 'valor_tipo_gasto')->withTimestamps();
     }
 
     public function centrais()

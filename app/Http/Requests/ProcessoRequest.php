@@ -20,9 +20,8 @@ class ProcessoRequest extends FormRequest
             'total_homologado' => numero_br_para_iso($this->total_homologado),
 
         ]);
-
+        $arrayValor = array();
         foreach ($this->valor_tipo_gasto as $key => $valor) {
-            $arrayValor = array();
             $arrayValor[$key] = numero_br_para_iso($valor);
         }
 

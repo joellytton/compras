@@ -11,7 +11,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Início</a></li>
                         <li class="breadcrumb-item">
-                            <a href="{{route('areaAbrangencia.index')}}">Lista de processos</a>
+                            <a href="{{route('processo.index')}}">Lista de processos</a>
                         </li>
                         <li class="breadcrumb-item active">Editar processo</li>
                     </ol>
