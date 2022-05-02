@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\verificarValorTipoGasto;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProcessoRequest extends FormRequest
@@ -21,11 +22,13 @@ class ProcessoRequest extends FormRequest
 
         ]);
         $arrayValor = array();
-        foreach ($this->valor_tipo_gasto as $key => $valor) {
-            $arrayValor[$key] = numero_br_para_iso($valor);
-        }
+        if (!empty($this->valor_tipo_gasto)) {
+            foreach ($this->valor_tipo_gasto as $key => $valor) {
+                $arrayValor[$key] = numero_br_para_iso($valor);
+            }
 
-        $this->merge(['valor_tipo_gasto' => $arrayValor]);
+            $this->merge(['valor_tipo_gasto' => $arrayValor]);
+        }
 
         if ($this->method() == 'PUT') {
             $this->merge([
@@ -50,7 +53,7 @@ class ProcessoRequest extends FormRequest
             'unidades_contempladas_id' => 'required',
             'area_abrangencia_id' => 'required',
             'tipos_gastos_id.*' => 'required',
-            'valor_tipo_gasto' => 'required',
+            'valor_tipo_gasto' => ['required', new verificarValorTipoGasto],
             'central_id.*' => 'required',
             'user_cadastro_id' => 'required',
         ];

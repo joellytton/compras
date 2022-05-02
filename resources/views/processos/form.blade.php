@@ -233,6 +233,14 @@
                     </div>
                     @endif
                 </div>
+
+                <div class="col-sm-12 col-md-1">
+                    <label for="valor_tipo_gasto" class="col-form-label">&emsp;</label>
+                    <button type="button" class="btn btn-danger btn-flat form-control"
+                        onclick="removeLinhaTipoGasto($(this))">
+                        <i class="fas fa-solid fa-trash"></i>
+                    </button>
+                </div>
             </div>
             @endforeach
             @else
@@ -269,6 +277,14 @@
                         {{$errors->first('valor_tipo_gasto')}}
                     </div>
                     @endif
+                </div>
+
+                <div class="col-sm-12 col-md-1">
+                    <label for="valor_tipo_gasto" class="col-form-label">&emsp;</label>
+                    <button type="button" class="btn btn-danger btn-flat form-control"
+                        onclick="removeLinhaTipoGasto($(this))">
+                        <i class="fas fa-solid fa-trash"></i>
+                    </button>
                 </div>
             </div>
             @endforeach
@@ -345,6 +361,15 @@
                     </div>
                     @endif
                 </div>
+
+
+                <div class="col-sm-12 col-md-1">
+                    <label for="valor_tipo_gasto" class="col-form-label">&emsp;</label>
+                    <button type="button" class="btn btn-danger btn-flat form-control"
+                        onclick="removeLinhaCentral($(this))">
+                        <i class="fas fa-solid fa-trash"></i>
+                    </button>
+                </div>
             </div>
             @endforeach
 
@@ -370,6 +395,15 @@
                     </div>
                     @endif
                 </div>
+
+
+                <div class="col-sm-12 col-md-1">
+                    <label for="valor_tipo_gasto" class="col-form-label">&emsp;</label>
+                    <button type="button" class="btn btn-danger btn-flat form-control"
+                        onclick="removeLinhaCentral($(this))">
+                        <i class="fas fa-solid fa-trash"></i>
+                    </button>
+                </div>
             </div>
             @endforeach
 
@@ -394,7 +428,6 @@
                     @endif
                 </div>
             </div>
-
             @endif
             @endif
 
@@ -415,7 +448,17 @@
         <div class="form-group row">
             <div class="col-sm-12 col-md-12">
                 <label for="descricao" class="col-form-label"></label>
-                <textarea name="descricao" id="summernote" cols="30" rows="10">{{old('descricao')}}</textarea>
+                <textarea name="descricao" id="summernote" cols="30" rows="10">
+                    @if (!empty(old('descricao')))
+                        {{old('descricao')}}
+                    @else
+                        @if (!empty($processo->anotacoes))
+                            @foreach ($processo->anotacoes as $anotacoes)
+                                {{$anotacoes->descricao}}
+                            @endforeach
+                        @endif
+                    @endif
+                </textarea>
                 @if ($errors->has('descricao'))
                 <div id="descricaoFeedback" class="invalid-feedback">
                     {{$errors->first('descricao')}}
@@ -563,8 +606,6 @@
         });
     }
 
-    // 
-
     $(document).ready(function () {
         $(":input").inputmask();
 
@@ -574,18 +615,6 @@
             decimal: ',',
             affixesStay: false
         });
-
-        // $("body").find('.money').inputmask('decimal', {
-        //     radixPoint: ",",
-        //     groupSeparator: ".",
-        //     // autoGroup: true,
-        //     allowMinus: false,
-        //     digits: 2,
-        //     digitsOptional: false,
-        //     rightAlign: true,
-        //     unmaskAsNumber: true,
-        //     removeMaskOnSubmit: true
-        // });
     });
 
 </script>
