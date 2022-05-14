@@ -46,7 +46,9 @@ class Processo extends Model
 
     protected static function buscar(int $perPage, string $keyword): AbstractPaginator
     {
-        return self::where('edital', 'like', "%{$keyword}%")->paginate($perPage);
+        return self::where('edital', 'like', "%{$keyword}%")
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
     }
 
     public function anotacoes()
@@ -57,7 +59,7 @@ class Processo extends Model
     public function tiposGastos()
     {
         return $this->belongsToMany(TipoGasto::class, 'processos_tipos_gastos', 'processo_id', 'tipos_gastos_id')
-        ->withPivot('valor_tipo_gasto', 'valor_tipo_gasto')->withTimestamps();
+            ->withPivot('valor_tipo_gasto', 'valor_tipo_gasto')->withTimestamps();
     }
 
     public function centrais()

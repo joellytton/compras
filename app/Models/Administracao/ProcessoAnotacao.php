@@ -2,8 +2,9 @@
 
 namespace App\Models\Administracao;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ProcessoAnotacao extends Model
 {
@@ -20,4 +21,9 @@ class ProcessoAnotacao extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'user_cadastro_id', 'id');
+    }
 }

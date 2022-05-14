@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class verificarValorTipoGasto implements Rule
+class VerificarValorTipoGasto implements Rule
 {
    
     public function __construct()
@@ -15,8 +15,10 @@ class verificarValorTipoGasto implements Rule
 
     public function passes($attribute, $value)
     {
-        if ($value > 0) {
-            return false;
+        foreach ($value as $valor) {
+            if ($valor == 0) {
+                return false;
+            }
         }
         return true;
     }

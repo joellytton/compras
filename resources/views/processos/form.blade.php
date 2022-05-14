@@ -448,17 +448,31 @@
         <div class="form-group row">
             <div class="col-sm-12 col-md-12">
                 <label for="descricao" class="col-form-label"></label>
+                @if (!empty($processo->anotacoes) && $processo->updated_at > $processo->created_at)
+                <textarea name="descricao" id="summernote" cols="30" rows="10" disabled>
+                    @if (!empty(old('descricao')))
+                        {{old('descricao')}}
+                    @else
+                        @if (!empty($processo->anotacoes))
+                            @foreach ($processo->anotacoes as $anotacoes)
+                            <h3 class="card-title mr-2">{{$anotacoes->usuario->name}}:</h3> {{$anotacoes->descricao}}
+                            @endforeach
+                        @endif
+                    @endif
+                </textarea>
+                @else
                 <textarea name="descricao" id="summernote" cols="30" rows="10">
                     @if (!empty(old('descricao')))
                         {{old('descricao')}}
                     @else
                         @if (!empty($processo->anotacoes))
                             @foreach ($processo->anotacoes as $anotacoes)
-                                {{$anotacoes->descricao}}
+                                {{$anotacoes->usuario->name}}: {{$anotacoes->descricao}} 
                             @endforeach
                         @endif
                     @endif
                 </textarea>
+                @endif
                 @if ($errors->has('descricao'))
                 <div id="descricaoFeedback" class="invalid-feedback">
                     {{$errors->first('descricao')}}
@@ -466,9 +480,39 @@
                 @endif
             </div>
         </div>
+        <div class="form-group row">
+            <div class="col-sm-12 col-md-12">
+                <button type="button" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#myModal">
+                    +
+                </button>
+
+            </div>
+        </div>
     </div>
 </div>
 
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Anotações</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea name="descricao" id="teste" cols="30" rows="10"></textarea>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 <div class="card-footer">
     <button type="submit" class="btn btn-primary">Salvar</button>
 </div>
@@ -615,7 +659,21 @@
             decimal: ',',
             affixesStay: false
         });
+
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#teste').summernote({
+                lang: 'pt-BR',
+                height: 150,
+            });
+        });
     });
 
 </script>
+
+@if (!empty($processo->anotacoes) && $processo->updated_at > $processo->created_at)
+<script>
+    $('#summernote').summernote('disable');
+
+</script>
+@endif
 @endpush

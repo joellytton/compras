@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\verificarValorTipoGasto;
+use App\Rules\VerificarValorTipoGasto;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProcessoRequest extends FormRequest
@@ -53,7 +53,7 @@ class ProcessoRequest extends FormRequest
             'unidades_contempladas_id' => 'required',
             'area_abrangencia_id' => 'required',
             'tipos_gastos_id.*' => 'required',
-            'valor_tipo_gasto' => ['required', new verificarValorTipoGasto],
+            'valor_tipo_gasto' => ['required', new VerificarValorTipoGasto],
             'central_id.*' => 'required',
             'user_cadastro_id' => 'required',
         ];
