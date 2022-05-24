@@ -69,5 +69,17 @@
     "/assets/summernote/summernote.min.js.LICENSE.txt": "/assets/summernote/summernote.min.js.LICENSE.txt",
     "/assets/summernote/summernote.min.js.map": "/assets/summernote/summernote.min.js.map",
     "/assets/select2-bootstrap4-theme/select2-bootstrap4.css": "/assets/select2-bootstrap4-theme/select2-bootstrap4.css",
-    "/assets/select2-bootstrap4-theme/select2-bootstrap4.min.css": "/assets/select2-bootstrap4-theme/select2-bootstrap4.min.css"
+    "/assets/select2-bootstrap4-theme/select2-bootstrap4.min.css": "/assets/select2-bootstrap4-theme/select2-bootstrap4.min.css",
+    "/assets/plentz-jquery-maskmoney/.editorconfig": "/assets/plentz-jquery-maskmoney/.editorconfig",
+    "/assets/plentz-jquery-maskmoney/.gitignore": "/assets/plentz-jquery-maskmoney/.gitignore",
+    "/assets/plentz-jquery-maskmoney/.jshintrc": "/assets/plentz-jquery-maskmoney/.jshintrc",
+    "/assets/plentz-jquery-maskmoney/.travis.yml": "/assets/plentz-jquery-maskmoney/.travis.yml",
+    "/assets/plentz-jquery-maskmoney/Gruntfile.js": "/assets/plentz-jquery-maskmoney/Gruntfile.js",
+    "/assets/plentz-jquery-maskmoney/LICENSE": "/assets/plentz-jquery-maskmoney/LICENSE",
+    "/assets/plentz-jquery-maskmoney/README.md": "/assets/plentz-jquery-maskmoney/README.md",
+    "/assets/plentz-jquery-maskmoney/bower.json": "/assets/plentz-jquery-maskmoney/bower.json",
+    "/assets/plentz-jquery-maskmoney/maskMoney.jquery.json": "/assets/plentz-jquery-maskmoney/maskMoney.jquery.json",
+    "/assets/plentz-jquery-maskmoney/package.json": "/assets/plentz-jquery-maskmoney/package.json",
+    "/assets/datatables/jquery.dataTables.js": "/assets/datatables/jquery.dataTables.js",
+    "/assets/datatables/jquery.dataTables.min.js": "/assets/datatables/jquery.dataTables.min.js"
 }

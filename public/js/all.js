@@ -17419,8 +17419,6 @@ if("undefined"==typeof jQuery)throw new Error("Tempus Dominus Bootstrap4's requi
 })));
 //# sourceMappingURL=adminlte.js.map
 
-
-
 $(window).on("load", function () {
     $("body").on('click', '.submit', function (e) {
         e.preventDefault();
@@ -17441,8 +17439,8 @@ $(window).on("load", function () {
         })
     });
 
-    $(window).keydown(function(event){
-        if(event.keyCode == 13) {
+    $(window).keydown(function (event) {
+        if (event.keyCode == 13) {
             event.preventDefault();
             return false;
         }

@@ -29,7 +29,7 @@
         </div>
 
         <div class="col-sm-12 col-md-4">
-            <label for="data_processo" class="col-form-label">Data:</label>
+            <label for="data_processo" class="col-form-label">Data de Recebimento(DIVCCL):</label>
             <input type="text" name="data_processo"
                 class="form-control {{$errors->has('data_processo') ? 'is-invalid' : ''}}"
                 aria-describedby="dataProcessoFeedback"

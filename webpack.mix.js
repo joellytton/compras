@@ -1,16 +1,5 @@
 const mix = require('laravel-mix');
 
-/*
- |--------------------------------------------------------------------------
- | Mix Asset Management
- |--------------------------------------------------------------------------
- |
- | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel applications. By default, we are compiling the CSS
- | file for the application as well as bundling up all the JS files.
- |
- */
-
 mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
@@ -54,3 +43,7 @@ mix.copy('resources/template/plugins/summernote', 'public/assets/summernote');
 mix.copy('resources/template/plugins/select2', 'public/assets/select2');
 mix.copy('resources/template/plugins/select2-bootstrap4-theme', 'public/assets/select2-bootstrap4-theme');
 mix.copy('resources/template/plugins/plentz-jquery-maskmoney', 'public/assets/plentz-jquery-maskmoney');
+mix.copy('resources/template/plugins/datatables', 'public/assets/datatables');
+mix.copy('resources/template/plugins/datatables-bs4/', 'public/assets/datatables-bs4');
+mix.copy('resources/template/plugins/datatables-responsive', 'public/assets/datatables-responsive');
+mix.copy('resources/template/plugins/datatables-buttons', 'public/assets/datatables-buttons');
