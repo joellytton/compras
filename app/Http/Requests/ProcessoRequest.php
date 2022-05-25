@@ -41,7 +41,7 @@ class ProcessoRequest extends FormRequest
     {
         return [
             'sei' => 'required|max:100',
-            'edital' => 'required|max:30',
+            'edital' => 'max:30',
             'total_estimado' => 'required',
             'total_homologado' => 'required',
             'data_processo' => 'required|date',
@@ -50,10 +50,10 @@ class ProcessoRequest extends FormRequest
             'modalidade_id' => 'required',
             'tecnico_responsavel_id' => 'required',
             'situacao_acompanhamento_id' => 'required',
-            'unidades_contempladas_id' => 'required',
+            'unidades_contempladas_id.*' => 'required',
             'area_abrangencia_id' => 'required',
-            'tipos_gastos_id.*' => 'required',
-            'valor_tipo_gasto' => ['required', new VerificarValorTipoGasto],
+            // 'tipos_gastos_id.*' => 'required',
+            // 'valor_tipo_gasto' => ['required', new VerificarValorTipoGasto],
             'central_id.*' => 'required',
             'user_cadastro_id' => 'required',
         ];
@@ -75,7 +75,7 @@ class ProcessoRequest extends FormRequest
             'modalidade_id.required' => 'O campo Modalidade é obrigatório!',
             'tecnico_responsavel_id.required' => 'O campo Técnico Responsável é obrigatório!',
             'situacao_acompanhamento_id.required' => 'O campo Situação é obrigatório!',
-            'unidades_contempladas_id.required' => 'O campo Unidades Contempladas é obrigatório!',
+            'unidades_contempladas_id.*.required' => 'O campo Unidades Contempladas é obrigatório!',
             'area_abrangencia_id.required' => 'O campo Área de Abrangência é obrigatório!',
             'tipos_gastos_id.*.required' => 'O campo Tipo de Gasto é obrigatório!',
             'valor_tipo_gasto.required' => 'O campo Valor do Tipo de Gasto é obrigatório!',

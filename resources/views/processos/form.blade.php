@@ -104,20 +104,7 @@
     </div>
 
     <div class="form-group row">
-        <div class="col-sm-12 col-md-4">
-            <label for="total_estimado" class="col-form-label">Valor Total Estimado:</label>
-            <input type="text" name="total_estimado"
-                class="form-control money {{$errors->has('total_estimado') ? 'is-invalid' : ''}}"
-                aria-describedby="totalEstimadoFeedback"
-                value="{{empty(old('total_estimado')) ? numero_iso_para_br(@$processo->total_estimado) : old('total_estimado')}}">
-            @if ($errors->has('total_estimado'))
-            <div id="totalEstimadoFeedback" class="invalid-feedback">
-                {{$errors->first('total_estimado')}}
-            </div>
-            @endif
-        </div>
-
-        <div class="col-sm-12 col-md-4">
+        <div class="col-sm-12 col-md-3">
             <label for="situacao_acompanhamento_id" class="col-form-label">Situação de Acompanhamento:</label>
             <select name="situacao_acompanhamento_id"
                 class="form-control select2 {{$errors->has('situacao_acompanhamento_id') ? 'is-invalid' : ''}}"
@@ -136,43 +123,7 @@
             </div>
             @endif
         </div>
-
-        <div class="col-sm-12 col-md-4">
-            <label for="total_homologado" class="col-form-label">Valor Total Homologado:</label>
-            <input type="text" name="total_homologado"
-                class="form-control money {{$errors->has('total_homologado') ? 'is-invalid' : ''}}"
-                aria-describedby="totalHomologadoFeedback"
-                value="{{empty(old('total_homologado')) ? numero_iso_para_br(@$processo->total_homologado) : old('total_homologado')}}">
-            @if ($errors->has('total_homologado'))
-            <div id="totalHomologadoFeedback" class="invalid-feedback">
-                {{$errors->first('total_homologado')}}
-            </div>
-            @endif
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <div class="col-sm-12 col-md-6">
-            <label for="unidades_contempladas_id" class="col-form-label">Unidades Contempladas:</label>
-            <select name="unidades_contempladas_id"
-                class="form-control select2 {{$errors->has('unidades_contempladas_id') ? 'is-invalid' : ''}}"
-                aria-describedby="unidadesContempladasIdFeedback">
-                <option value="">Selecione uma opção</option>
-                @foreach($unidadesContempladas as $unidade)
-                <option value="{{$unidade->id}}"
-                    {{(empty(old('unidades_contempladas_id')) ? @$processo->unidade[0]->id : old('unidades_contempladas_id')) == $unidade->id ? 'selected' : ''}}>
-                    {{$unidade->nome}}
-                </option>
-                @endforeach
-            </select>
-            @if ($errors->has('unidades_contempladas_id'))
-            <div id="unidadesContempladasIdFeedback" class="invalid-feedback">
-                {{$errors->first('unidades_contempladas_id')}}
-            </div>
-            @endif
-        </div>
-
-        <div class="col-sm-12 col-md-6">
+        <div class="col-sm-12 col-md-3">
             <label for="area_abrangencia_id" class="col-form-label">Área de Abrangência:</label>
             <select name="area_abrangencia_id"
                 class="form-control select2 {{$errors->has('area_abrangencia_id') ? 'is-invalid' : ''}}"
@@ -190,6 +141,136 @@
                 {{$errors->first('area_abrangencia_id')}}
             </div>
             @endif
+        </div>
+        <div class="col-sm-12 col-md-3">
+            <label for="total_estimado" class="col-form-label">Valor Total Estimado:</label>
+            <input type="text" name="total_estimado"
+                class="form-control money {{$errors->has('total_estimado') ? 'is-invalid' : ''}}"
+                aria-describedby="totalEstimadoFeedback"
+                value="{{empty(old('total_estimado')) ? numero_iso_para_br(@$processo->total_estimado) : old('total_estimado')}}">
+            @if ($errors->has('total_estimado'))
+            <div id="totalEstimadoFeedback" class="invalid-feedback">
+                {{$errors->first('total_estimado')}}
+            </div>
+            @endif
+        </div>
+        <div class="col-sm-12 col-md-3">
+            <label for="total_homologado" class="col-form-label">Valor Total Homologado:</label>
+            <input type="text" name="total_homologado"
+                class="form-control money {{$errors->has('total_homologado') ? 'is-invalid' : ''}}"
+                aria-describedby="totalHomologadoFeedback"
+                value="{{empty(old('total_homologado')) ? numero_iso_para_br(@$processo->total_homologado) : old('total_homologado')}}">
+            @if ($errors->has('total_homologado'))
+            <div id="totalHomologadoFeedback" class="invalid-feedback">
+                {{$errors->first('total_homologado')}}
+            </div>
+            @endif
+        </div>
+    </div>
+</div>
+
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Unidades Contempladas</h3>
+    </div>
+    <div class="card-body ">
+        <div class="divUnidades">
+            @if (!empty(old('unidades_contempladas_id')))
+            @foreach (old('unidades_contempladas_id') as $processoUnidade)
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-8">
+                    <label for="unidades_contempladas_id" class="col-form-label">Unidades Contempladas:</label>
+                    <select name="unidades_contempladas_id[]"
+                        class="form-control select2 {{$errors->has('unidades_contempladas_id.*') ? 'is-invalid' : ''}}"
+                        aria-describedby="unidadeIdFeedback">
+                        <option value="">Selecione uma opção</option>
+                        @foreach($unidadesContempladas as $unidade)
+                        <option value="{{$unidade->id}}" @if(@$processoUnidade==$unidade->id) selected
+                            @endif>
+                            {{$unidade->nome}}
+                        </option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('unidades_contempladas_id.*'))
+                    <div id="unidadeIdFeedback" class="invalid-feedback">
+                        {{$errors->first('unidades_contempladas_id.*')}}
+                    </div>
+                    @endif
+                </div>
+
+                <div class="col-sm-12 col-md-1">
+                    <label for="" class="col-form-label">&emsp;</label>
+                    <button type="button" class="btn btn-danger btn-flat form-control"
+                        onclick="removeLinhaUnidade($(this))">
+                        <i class="fas fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            @endforeach
+
+            @else
+            @if (!empty($processo->unidades))
+            @foreach ($processo->unidades as $processoUnidade)
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-8">
+                    <label for="unidades_contempladas_id" class="col-form-label">Unidades Contempladas:</label>
+                    <select name="unidades_contempladas_id[]"
+                        class="form-control select2 {{$errors->has('unidades_contempladas_id.*') ? 'is-invalid' : ''}}"
+                        aria-describedby="unidadeIdFeedback">
+                        <option value="">Selecione uma opção</option>
+                        @foreach($unidadesContempladas as $unidade)
+                        <option value="{{$unidade->id}}" {{$processoUnidade->id == $unidade->id ? 'selected' : ''}}>
+                            {{$unidade->nome}}
+                        </option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('unidades_contempladas_id.*'))
+                    <div id="unidadeIdFeedback" class="invalid-feedback">
+                        {{$errors->first('unidades_contempladas_id.*')}}
+                    </div>
+                    @endif
+                </div>
+                
+                <div class="col-sm-12 col-md-1">
+                    <label for="" class="col-form-label">&emsp;</label>
+                    <button type="button" class="btn btn-danger btn-flat form-control"
+                        onclick="removeLinhaUnidade($(this))">
+                        <i class="fas fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            @endforeach
+
+            @else
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-8">
+                    <label for="unidades_contempladas_id" class="col-form-label">Unidades Contempladas:</label>
+                    <select name="unidades_contempladas_id[]"
+                        class="form-control select2 {{$errors->has('unidades_contempladas_id.*') ? 'is-invalid' : ''}}"
+                        aria-describedby="unidadeIdFeedback">
+                        <option value="">Selecione uma opção</option>
+                        @foreach($unidadesContempladas as $unidade)
+                        <option value="{{$unidade->id}}">
+                            {{$unidade->nome}}
+                        </option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('unidades_contempladas_id.*'))
+                    <div id="unidadeIdFeedback" class="invalid-feedback">
+                        {{$errors->first('unidades_contempladas_id.*')}}
+                    </div>
+                    @endif
+                </div>
+            </div>
+            @endif
+            @endif
+
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12 col-md-12">
+                <button type="button" class="btn btn-primary btn-flat" onclick="addUnidade()">+</button>
+            </div>
         </div>
     </div>
 </div>
@@ -447,6 +528,7 @@
     <div class="card-body ">
         <div class="form-group row">
             <div class="col-sm-12 col-md-12">
+
                 <label for="descricao" class="col-form-label"></label>
                 @if (!empty($processo->anotacoes) && $processo->updated_at > $processo->created_at)
                 <textarea name="descricao" id="summernote" cols="30" rows="10" disabled>
@@ -488,31 +570,35 @@
 
             </div>
         </div>
+        <div class="form-group row mt-5">
+            <div class="col-sm-12 col-md-12">
+                <!-- Post -->
+                <div class="post">
+                    <div class="user-block">
+                        <span class="username ml-0">
+                            <a href="#">Jonathan Burke Jr.</a>
+                        </span>
+                        <span class="description ml-0">Compartilhado Publicamente - 7:30</span>
+                    </div>
+                    <!-- /.user-block -->
+                    <p>
+                        Lorem ipsum represents a long-held tradition for designers,
+                        typographers and the like. Some people hate it and argue for
+                        its demise, but others ignore the hate as they create awesome
+                        tools to help create filler text for everyone from bacon lovers
+                        to Charlie Sheen fans.
+                    </p>
+                    
+                        <div class="float-right">
+                            <button type="button" class="btn btn-sm btn-danger">Excluir</button>
+                        </div>
+                </div>
+                <!-- /.post -->
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Anotações</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <textarea name="descricao" id="teste" cols="30" rows="10"></textarea>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary">Salvar</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
 <div class="card-footer">
     <button type="submit" class="btn btn-primary">Salvar</button>
 </div>
@@ -629,6 +715,51 @@
     function removeLinhaCentral(element) {
         element.parent().parent().remove();
         quantidadeCentral--;
+    }
+
+    var quantidadeUnidade = 1;
+
+    function addUnidade() {
+        if (quantidadeUnidade > 5) {
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: "Limite de 5 unidades contempladas",
+                showConfirmButton: true,
+                timer: 2000
+            })
+            return;
+        }
+
+        quantidadeUnidade++;
+
+        let unidade = `<div class="form-group row">
+            <div class="col-sm-12 col-md-8">
+                <label for="unidades_contempladas_id" class="col-form-label">Unidades Contempladas:</label>
+                <select name="unidades_contempladas_id[]"
+                        class="form-control select2 {{$errors->has('unidades_contempladas_id.*') ? 'is-invalid' : ''}}"
+                        aria-describedby="unidadeIdFeedback">
+                    <option value="">Selecione uma opção</option>'`;
+
+        @foreach($unidadesContempladas as $unidade)
+        unidade += ` <option value="{{$central->id}}">{{$unidade->nome}}</option>`;
+        @endforeach
+        unidade += `</select>
+            </div>
+           <div class="col-sm-12 col-md-1">
+                    <label for="" class="col-form-label">&emsp;</label>
+                    <button type="button" class="btn btn-danger btn-flat form-control"
+                    onclick="removeLinhaUnidade($(this))">
+                     <i class="fas fa-solid fa-trash"></i>
+                    </button>
+           </div>
+        </div>`;
+        $(".divUnidades").append(unidade);
+    }
+
+    function removeLinhaUnidade(element) {
+        element.parent().parent().remove();
+        quantidadeUnidade--;
     }
 
     $('#summernote').summernote({

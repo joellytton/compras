@@ -51,6 +51,7 @@
                         <table class="table table-striped" id="processos">
                             <thead>
                                 <tr>
+                                    <th class="text-center">#</th>
                                     <th class="text-center">Sei</th>
                                     <th class="text-center">Edital</th>
                                     <th class="text-center">Área de Abrangência</th>
@@ -150,6 +151,5 @@
             "responsive": true,
         });
     })
-
 </script>
 @endpush
