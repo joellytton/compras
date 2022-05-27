@@ -55,6 +55,14 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="{{route('projetoAtividade.index')}}"
+                       class="nav-link {!! (Request::is('projetoAtividade*') ? 'active' :"") !!}">
+                        <i class="fas fa-circle nav-icon"></i>
+                        <p>Projeto/Atividades</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a href="{{route('situacao.index')}}"
                        class="nav-link {!! (Request::is('situacao*') ? 'active' :"") !!}">
                         <i class="fas fa-circle nav-icon"></i>

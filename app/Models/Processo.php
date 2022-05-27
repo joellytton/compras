@@ -46,7 +46,16 @@ class Processo extends Model
 
     protected static function buscar(int $perPage, string $keyword): AbstractPaginator
     {
-        return self::where('edital', 'like', "%{$keyword}%")
+        return self::with(
+            'areaAbrangencia',
+            'modalidade',
+            'tecnicoResponsavel',
+            'tiposGastos',
+            'centrais',
+            'situacaoAcompanhamento'
+        )
+            ->where('status', 'ativo')
+            ->where('edital', 'like', "%{$keyword}%")
             ->orderBy('created_at', 'desc')
             ->paginate($perPage);
     }
@@ -82,7 +91,7 @@ class Processo extends Model
         );
     }
 
-    public function unidade()
+    public function unidades()
     {
         return $this->belongsToMany(
             UnidadesContempladas::class,

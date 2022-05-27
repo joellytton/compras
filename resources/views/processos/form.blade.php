@@ -231,7 +231,7 @@
                     </div>
                     @endif
                 </div>
-                
+
                 <div class="col-sm-12 col-md-1">
                     <label for="" class="col-form-label">&emsp;</label>
                     <button type="button" class="btn btn-danger btn-flat form-control"
@@ -325,7 +325,8 @@
             </div>
             @endforeach
             @else
-            @if (!empty($processo->tiposGastos))
+            @if (!$processo->tiposGastos->isEmpty())
+            {{dd("aqui")}}
             @foreach ($processo->tiposGastos as $processoTipo)
             <div class="form-group row">
                 <div class="col-sm-12 col-md-4">
@@ -521,40 +522,16 @@
     </div>
 </div>
 
-<div class="card card-default">
+{{-- <div class="card card-default">
     <div class="card-header">
         <h3 class="card-title">Anotações</h3>
     </div>
-    <div class="card-body ">
+    <div class="card-body">
         <div class="form-group row">
             <div class="col-sm-12 col-md-12">
+                <textarea name="descricao" class="form-control" cols="30"
+                    rows="10">{{empty(old('descricao')) ? @$processo->descricao : old('descricao')}}</textarea>
 
-                <label for="descricao" class="col-form-label"></label>
-                @if (!empty($processo->anotacoes) && $processo->updated_at > $processo->created_at)
-                <textarea name="descricao" id="summernote" cols="30" rows="10" disabled>
-                    @if (!empty(old('descricao')))
-                        {{old('descricao')}}
-                    @else
-                        @if (!empty($processo->anotacoes))
-                            @foreach ($processo->anotacoes as $anotacoes)
-                            <h3 class="card-title mr-2">{{$anotacoes->usuario->name}}:</h3> {{$anotacoes->descricao}}
-                            @endforeach
-                        @endif
-                    @endif
-                </textarea>
-                @else
-                <textarea name="descricao" id="summernote" cols="30" rows="10">
-                    @if (!empty(old('descricao')))
-                        {{old('descricao')}}
-                    @else
-                        @if (!empty($processo->anotacoes))
-                            @foreach ($processo->anotacoes as $anotacoes)
-                                {{$anotacoes->usuario->name}}: {{$anotacoes->descricao}} 
-                            @endforeach
-                        @endif
-                    @endif
-                </textarea>
-                @endif
                 @if ($errors->has('descricao'))
                 <div id="descricaoFeedback" class="invalid-feedback">
                     {{$errors->first('descricao')}}
@@ -562,42 +539,8 @@
                 @endif
             </div>
         </div>
-        <div class="form-group row">
-            <div class="col-sm-12 col-md-12">
-                <button type="button" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#myModal">
-                    +
-                </button>
-
-            </div>
-        </div>
-        <div class="form-group row mt-5">
-            <div class="col-sm-12 col-md-12">
-                <!-- Post -->
-                <div class="post">
-                    <div class="user-block">
-                        <span class="username ml-0">
-                            <a href="#">Jonathan Burke Jr.</a>
-                        </span>
-                        <span class="description ml-0">Compartilhado Publicamente - 7:30</span>
-                    </div>
-                    <!-- /.user-block -->
-                    <p>
-                        Lorem ipsum represents a long-held tradition for designers,
-                        typographers and the like. Some people hate it and argue for
-                        its demise, but others ignore the hate as they create awesome
-                        tools to help create filler text for everyone from bacon lovers
-                        to Charlie Sheen fans.
-                    </p>
-                    
-                        <div class="float-right">
-                            <button type="button" class="btn btn-sm btn-danger">Excluir</button>
-                        </div>
-                </div>
-                <!-- /.post -->
-            </div>
-        </div>
     </div>
-</div>
+</div> --}}
 
 <div class="card-footer">
     <button type="submit" class="btn btn-primary">Salvar</button>
@@ -762,11 +705,6 @@
         quantidadeUnidade--;
     }
 
-    $('#summernote').summernote({
-        lang: 'pt-BR',
-        height: 150,
-    });
-
     function mascaraValor() {
         $("body").find('.money').inputmask('decimal', {
             radixPoint: ",",
@@ -790,21 +728,6 @@
             decimal: ',',
             affixesStay: false
         });
-
-        $('#myModal').on('shown.bs.modal', function () {
-            $('#teste').summernote({
-                lang: 'pt-BR',
-                height: 150,
-            });
-        });
     });
-
 </script>
-
-@if (!empty($processo->anotacoes) && $processo->updated_at > $processo->created_at)
-<script>
-    $('#summernote').summernote('disable');
-
-</script>
-@endif
 @endpush

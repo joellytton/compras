@@ -67,24 +67,26 @@ class ProcessoController extends Controller
             return redirect()->back()->with('error', 'Erro ao cadastrar uma area de abrangência processo!');
         }
 
-        if (!$processo->unidade()->sync($request->unidades_contempladas_id)) {
+        if (!$processo->unidades()->sync($request->unidades_contempladas_id)) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Erro ao cadastrar uma unidade contemplada!');
         }
 
-        if (!$processo->anotacoes()->create($request->all())) {
-            DB::rollBack();
-            return redirect()->back()->with('error', 'Erro ao cadastrar as anotações do processo!');
-        }
+        // if (!$processo->anotacoes()->create($request->all())) {
+        //     DB::rollBack();
+        //     return redirect()->back()->with('error', 'Erro ao cadastrar as anotações do processo!');
+        // }
 
-        $dadosTipoGasto = [];
-        foreach ($request->tipos_gastos_id as $key => $tipoGasto) {
-            $dadosTipoGasto[$tipoGasto] = ['valor_tipo_gasto' => $request->valor_tipo_gasto[$key]];
-        }
-        
-        if (!$processo->tiposGastos()->sync($dadosTipoGasto)) {
-            DB::rollBack();
-            return redirect()->back()->with('error', 'Erro ao cadastrar os tipos de gastos do processo!');
+        if (!empty(array_filter($request->tipos_gastos_id))) {
+            $dadosTipoGasto = [];
+            foreach ($request->tipos_gastos_id as $key => $tipoGasto) {
+                $dadosTipoGasto[$tipoGasto] = ['valor_tipo_gasto' => $request->valor_tipo_gasto[$key]];
+            }
+
+            if (!$processo->tiposGastos()->sync($dadosTipoGasto)) {
+                DB::rollBack();
+                return redirect()->back()->with('error', 'Erro ao cadastrar os tipos de gastos do processo!');
+            }
         }
 
         if (!$processo->centrais()->sync($request->central_id)) {
@@ -141,19 +143,21 @@ class ProcessoController extends Controller
             return redirect()->back()->with('error', 'Erro ao cadastrar uma area de abrangência processo!');
         }
 
-        if (!$processo->unidade()->sync($request->unidades_contempladas_id)) {
+        if (!$processo->unidades()->sync($request->unidades_contempladas_id)) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Erro ao cadastrar uma unidade contemplada!');
         }
 
-        $dadosTipoGasto = [];
-        foreach ($request->tipos_gastos_id as $key => $tipoGasto) {
-            $dadosTipoGasto[$tipoGasto] = ['valor_tipo_gasto' => $request->valor_tipo_gasto[$key]];
-        }
-        
-        if (!$processo->tiposGastos()->sync($dadosTipoGasto)) {
-            DB::rollBack();
-            return redirect()->back()->with('error', 'Erro ao cadastrar os tipos de gastos do processo!');
+        if (!empty(array_filter($request->tipos_gastos_id))) {
+            $dadosTipoGasto = [];
+            foreach ($request->tipos_gastos_id as $key => $tipoGasto) {
+                $dadosTipoGasto[$tipoGasto] = ['valor_tipo_gasto' => $request->valor_tipo_gasto[$key]];
+            }
+
+            if (!$processo->tiposGastos()->sync($dadosTipoGasto)) {
+                DB::rollBack();
+                return redirect()->back()->with('error', 'Erro ao cadastrar os tipos de gastos do processo!');
+            }
         }
 
         if (!$processo->centrais()->sync($request->central_id)) {
@@ -173,6 +177,7 @@ class ProcessoController extends Controller
             DB::rollBack();
             return redirect()->back()->with('error', 'Erro ao cadastrar um processo!');
         }
+        DB::commit();
 
         return redirect()->route('processo.index')->with('success', 'Processo excluído com sucesso!');
     }
