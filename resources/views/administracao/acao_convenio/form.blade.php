@@ -6,10 +6,9 @@
 <div class="card-body">
     <div class="form-group row">
         <div class="col-sm-12 col-md-5">
-            <label for="nome" class="col-form-label">Projeto/Atividade:</label>
+            <label for="nome" class="col-form-label">Ação/Convênio:</label>
             <input type="text" name="nome" class="form-control {{$errors->has('nome') ? 'is-invalid' : ''}}"
-                aria-describedby="nomeFeedback"
-                value="{{empty(old('nome')) ? @$projetoAtividade->nome : old('nome')}}">
+                aria-describedby="nomeFeedback" value="{{empty(old('nome')) ? @$acaoConvenio->nome : old('nome')}}">
             @if ($errors->has('nome'))
             <div id="nomeFeedback" class="invalid-feedback">
                 {{$errors->first('nome')}}
@@ -17,16 +16,17 @@
             @endif
         </div>
         <div class="col-sm-12 col-md-5">
-            <label for="tipo" class="col-form-label">Tipo:</label>
+            <label for="tipo" class="col-form-label">Tipo:</label>{{@$acaoConvenio->tipo}}
             <select name="tipo" class="form-control {{$errors->has('tipo') ? 'is-invalid' : ''}}">
                 <option value="">Selecione uma opção</option>
-                <option value="projeto"
-                    {{(empty(old('tipo')) ? @$projetoAtividade->tipo : old('tipo')) == 'projeto' ? 'selected' : ''}}>
-                    Projeto
+                <option value="acao"
+                    {{(empty(old('tipo')) ? @$acaoConvenio->tipo : old('tipo')) == 'acao' ? 'selected' : ''}}>
+                    Ação
                 </option>
-                <option value="atividade"
-                    {{(empty(old('tipo')) ? @$projetoAtividade->tipo : old('tipo')) == 'atividade' ? 'selected' : ''}}>
-                    Atividade</option>
+                <option value="convenio"
+                    {{(empty(old('tipo')) ? @$acaoConvenio->tipo : old('tipo')) == 'convenio' ? 'selected' : ''}}>
+                    Convênio
+                </option>
             </select>
             @if ($errors->has('tipo'))
             <div id="tipoFeedback" class="invalid-feedback">

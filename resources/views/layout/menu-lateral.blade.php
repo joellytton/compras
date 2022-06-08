@@ -23,6 +23,13 @@
 
                 <li class="nav-header">ADMINISTRAÇÃO</li>
                 <li class="nav-item">
+                    <a href="{{route('acaoConvenio.index')}}" class="nav-link
+                    {!! (Request::is('acaoConvenio*') ? 'active' :"") !!}">
+                        <i class="fas fa-circle nav-icon"></i>
+                        <p>Ação/Convênio</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{route('areaAbrangencia.index')}}" class="nav-link
                     {!! (Request::is('areaAbrangencia*') ? 'active' :"") !!}">
                         <i class="fas fa-circle nav-icon"></i>

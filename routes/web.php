@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\Administracao\AcaoConveniosController;
 use App\Http\Controllers\Administracao\AreaAbrangenciaController;
 use App\Http\Controllers\Administracao\CentralAtendimentoController;
 use App\Http\Controllers\Administracao\ModalidadeController;
@@ -20,6 +22,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::group(['middleware' => ['auth', 'verificar.permissao:0']], function () {
+    Route::resource('/acaoConvenio', AcaoConveniosController::class);
     Route::resource('/areaAbrangencia', AreaAbrangenciaController::class)
         ->parameters(['areaAbrangencia' => 'areaAbrangencia']);
     Route::resource('/centralAtendimento', CentralAtendimentoController::class);
