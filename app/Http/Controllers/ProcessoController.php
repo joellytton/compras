@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProcessoRequest;
+use App\Models\Administracao\AcaoConvenios;
 use App\Models\Administracao\AreaAbrangencia;
 use App\Models\Administracao\CentralAtendimento;
 use App\Models\Administracao\Modalidade;
 use App\Models\Administracao\Objeto;
+use App\Models\Administracao\ProjetoAtividade;
 use App\Models\Administracao\SituacaoAcompanhamento;
 use App\Models\Administracao\TipoGasto;
 use App\Models\Administracao\UnidadesContempladas;
@@ -31,23 +33,28 @@ class ProcessoController extends Controller
 
     public function create(): View
     {
-        $objetos = Objeto::where('status', '=', 'ativo')->get();
-        $modalidades = Modalidade::where('status', '=', 'ativo')->get();
-        $tiposGastos = TipoGasto::where('status', '=', 'ativo')->get();
-        $usuarios = User::where('status', '=', 'ativo')->get();
-        $unidadesContempladas = UnidadesContempladas::where('status', '=', 'ativo')->get();
+        $acaoConvenios = AcaoConvenios::where('status', '=', 'ativo')->get();
         $areasDeAbrangencias = AreaAbrangencia::where('status', '=', 'ativo')->get();
-        $situacoes = SituacaoAcompanhamento::where('status', '=', 'ativo')->get();
         $centrais = CentralAtendimento::where('status', '=', 'ativo')->get();
+        $modalidades = Modalidade::where('status', '=', 'ativo')->get();
+        $objetos = Objeto::where('status', '=', 'ativo')->get();
+        $projetoAtividades = ProjetoAtividade::where('status', '=', 'ativo')->get();
+        $tiposGastos = TipoGasto::where('status', '=', 'ativo')->get();
+        $unidadesContempladas = UnidadesContempladas::where('status', '=', 'ativo')->get();
+        $usuarios = User::where('status', '=', 'ativo')->get();
+        $situacoes = SituacaoAcompanhamento::where('status', '=', 'ativo')->get();
+
         return view('processos.create', compact(
-            'objetos',
-            'modalidades',
-            'tiposGastos',
-            'usuarios',
-            'unidadesContempladas',
+            'acaoConvenios',
             'areasDeAbrangencias',
+            'centrais',
+            'modalidades',
+            'objetos',
+            'projetoAtividades',
+            'tiposGastos',
+            'unidadesContempladas',
+            'usuarios',
             'situacoes',
-            'centrais'
         ));
     }
 
@@ -106,25 +113,29 @@ class ProcessoController extends Controller
 
     public function edit(Processo $processo): View
     {
-        $objetos = Objeto::where('status', '=', 'ativo')->get();
-        $modalidades = Modalidade::where('status', '=', 'ativo')->get();
-        $tiposGastos = TipoGasto::where('status', '=', 'ativo')->get();
-        $usuarios = User::where('status', '=', 'ativo')->get();
-        $unidadesContempladas = UnidadesContempladas::where('status', '=', 'ativo')->get();
+        $acaoConvenios = AcaoConvenios::where('status', '=', 'ativo')->get();
         $areasDeAbrangencias = AreaAbrangencia::where('status', '=', 'ativo')->get();
-        $situacoes = SituacaoAcompanhamento::where('status', '=', 'ativo')->get();
         $centrais = CentralAtendimento::where('status', '=', 'ativo')->get();
+        $modalidades = Modalidade::where('status', '=', 'ativo')->get();
+        $objetos = Objeto::where('status', '=', 'ativo')->get();
+        $projetoAtividades = ProjetoAtividade::where('status', '=', 'ativo')->get();
+        $situacoes = SituacaoAcompanhamento::where('status', '=', 'ativo')->get();
+        $unidadesContempladas = UnidadesContempladas::where('status', '=', 'ativo')->get();
+        $usuarios = User::where('status', '=', 'ativo')->get();
+        $tiposGastos = TipoGasto::where('status', '=', 'ativo')->get();
 
         return view('processos.edit', compact(
-            'processo',
-            'objetos',
-            'modalidades',
-            'tiposGastos',
-            'usuarios',
-            'unidadesContempladas',
+            'acaoConvenios',
             'areasDeAbrangencias',
+            'centrais',
+            'modalidades',
+            'objetos',
+            'projetoAtividades',
+            'processo',
             'situacoes',
-            'centrais'
+            'unidadesContempladas',
+            'usuarios',
+            'tiposGastos',
         ));
     }
 
@@ -157,6 +168,31 @@ class ProcessoController extends Controller
             if (!$processo->tiposGastos()->sync($dadosTipoGasto)) {
                 DB::rollBack();
                 return redirect()->back()->with('error', 'Erro ao cadastrar os tipos de gastos do processo!');
+            }
+        }
+
+        if (!empty(array_filter($request->acao_convenio_id))) {
+            $dadosAcaoConvenio = [];
+            foreach ($request->acao_convenio_id as $key => $acaoConvenio) {
+                $dadosAcaoConvenio[$acaoConvenio] = ['valor_acao_convenio' => $request->valor_acao_convenio[$key]];
+            }
+
+            if (!$processo->acaoConvenio()->sync($dadosAcaoConvenio)) {
+                DB::rollBack();
+                return redirect()->back()->with('error', 'Erro ao cadastrar as ações/convênio do processo!');
+            }
+        }
+
+        if (!empty(array_filter($request->projeto_atividade_id))) {
+            $dadosProjetoAtividade = [];
+            foreach ($request->projeto_atividade_id as $key => $projetoAtividade) {
+                $dadosProjetoAtividade[$projetoAtividade] = ['valor_projeto_atividade' =>
+                $request->valor_projeto_atividade[$key]];
+            }
+
+            if (!$processo->projetoAtividade()->sync($dadosProjetoAtividade)) {
+                DB::rollBack();
+                return redirect()->back()->with('error', 'Erro ao cadastrar os projeto/atividade do processo!');
             }
         }
 

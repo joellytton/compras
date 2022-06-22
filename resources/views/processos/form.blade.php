@@ -169,7 +169,6 @@
     </div>
 </div>
 
-
 <div class="card card-default">
     <div class="card-header">
         <h3 class="card-title">Unidades Contempladas</h3>
@@ -265,7 +264,6 @@
             </div>
             @endif
             @endif
-
         </div>
         <div class="form-group row">
             <div class="col-sm-12 col-md-12">
@@ -416,6 +414,290 @@
 
 <div class="card card-default">
     <div class="card-header">
+        <h3 class="card-title">Ação/Convênio</h3>
+    </div>
+    <div class="card-body">
+        <div class="divAcaoConvenio">
+            @if (!empty(old('acao_convenio_id')))
+            @foreach (old('acao_convenio_id') as $key => $processoAcaoConvenio)
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-4">
+                    <label for="acao_convenio_id" class="col-form-label">Ação/Convênio:</label>
+                    <select name="acao_convenio_id[]"
+                        class="form-control select2 {{$errors->has('acao_convenio_id.*') ? 'is-invalid' : ''}}"
+                        aria-describedby="acaoConvenioIdFeedback">
+                        <option value="">Selecione uma opção</option>
+                        @foreach($acaoConvenios as $acaoConvenio)
+                        <option value="{{$acaoConvenio->id}}"
+                            {{$processoAcaoConvenio == $acaoConvenio->id ? 'selected' : ''}}>
+                            {{$acaoConvenio->nome}}
+                        </option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('acao_convenio_id.*'))
+                    <div id="acaoConvenioIdFeedback" class="invalid-feedback">
+                        {{$errors->first('acao_convenio_id.*')}}
+                    </div>
+                    @endif
+                </div>
+
+                <div class="col-sm-12 col-md-4">
+                    <label for="valor_tipo_gasto" class="col-form-label">Valor da Ação/Convênio:</label>
+                    <input type="text" name="valor_tipo_gasto[]"
+                        class="form-control money {{$errors->has('valor_tipo_gasto') ? 'is-invalid' : ''}}"
+                        aria-describedby="valorTipoGastoFeedback" value="{{old('valor_tipo_gasto')[$key]}}">
+                    @if ($errors->has('valor_tipo_gasto'))
+                    <div id="valorTipoGastoFeedback" class="invalid-feedback">
+                        {{$errors->first('valor_tipo_gasto')}}
+                    </div>
+                    @endif
+                </div>
+
+                <div class="col-sm-12 col-md-1">
+                    <label class="col-form-label">&emsp;</label>
+                    <button type="button" class="btn btn-danger btn-flat form-control"
+                        onclick="removeLinhaAcaoConvenio($(this))">
+                        <i class="fas fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            @endforeach
+            @else
+            @if (!empty(@$processo->acaoConvenio))
+            @foreach ($processo->acaoConvenio as $processoAcaoConvenio)
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-4">
+                    <label for="acao_convenio_id" class="col-form-label">Ação/Convênio:</label>
+                    <select name="acao_convenio_id[]"
+                        class="form-control select2 {{$errors->has('acao_convenio_id.*') ? 'is-invalid' : ''}}"
+                        aria-describedby="acaoConvenioIdFeedback">
+                        <option value="">Selecione uma opção</option>
+                        @foreach($acaoConvenios as $acaoConvenio)
+                        <option value="{{$acaoConvenio->id}}"
+                            {{$processoAcaoConvenio->id == $acaoConvenio->id ? 'selected' : ''}}>
+                            {{$acaoConvenio->nome}}
+                        </option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('acao_convenio_id.*'))
+                    <div id="acaoConvenioIdFeedback" class="invalid-feedback">
+                        {{$errors->first('acao_convenio_id.*')}}
+                    </div>
+                    @endif
+                </div>
+
+                <div class="col-sm-12 col-md-4">
+                    <label for="valor_acao_convenio" class="col-form-label">Valor da Ação/Convênio:</label>
+                    <input type="text" name="valor_acao_convenio[]"
+                        class="form-control money {{$errors->has('valor_acao_convenio') ? 'is-invalid' : ''}}"
+                        aria-describedby="valorAcaoConvenioFeedback"
+                        value="{{numero_iso_para_br($processoTipo->pivot->valor_tipo_gasto)}}">
+                    @if ($errors->has('valor_acao_convenio'))
+                    <div id="valorAcaoConvenioFeedback" class="invalid-feedback">
+                        {{$errors->first('valor_acao_convenio')}}
+                    </div>
+                    @endif
+                </div>
+
+                <div class="col-sm-12 col-md-1">
+                    <label class="col-form-label">&emsp;</label>
+                    <button type="button" class="btn btn-danger btn-flat form-control"
+                        onclick="removeLinhaAcaoConvenio($(this))">
+                        <i class="fas fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            @endforeach
+            @else
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-4">
+                    <label for="projeto_atividade_id" class="col-form-label">Projeto/Atividade:</label>
+                    <select name="projeto_atividade_id[]"
+                        class="form-control select2 {{$errors->has('projeto_atividade_id.*') ? 'is-invalid' : ''}}"
+                        aria-describedby="valorAcaoConvenioFeedback">
+                        <option value="">Selecione uma opção</option>
+                        @foreach($projetoAtividades as $projetoAtividade)
+                        <option value="{{$projetoAtividade->id}}">
+                            {{$projetoAtividade->nome}}
+                        </option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('projeto_atividade_id.*'))
+                    <div id="projetoAtividadeIdFeedback" class="invalid-feedback">
+                        {{$errors->first('projeto_atividade_id.*')}}
+                    </div>
+                    @endif
+                </div>
+
+                <div class="col-sm-12 col-md-4">
+                    <label for="valor_acao_convenio" class="col-form-label">Valor da Ação/Convênio:</label>
+                    <input type="text" name="valor_acao_convenio[]"
+                        class="form-control money {{$errors->has('valor_acao_convenio') ? 'is-invalid' : ''}}"
+                        aria-describedby="valorAcaoConvenioFeedback" value="">
+                    @if ($errors->has('valor_acao_convenio'))
+                    <div id="valorAcaoConvenioFeedback" class="invalid-feedback">
+                        {{$errors->first('valor_acao_convenio')}}
+                    </div>
+                    @endif
+                </div>
+            </div>
+            @endif
+            @endif
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-12 col-md-12">
+                <button type="button" class="btn btn-primary btn-flat" onclick="addAcaoConvenio()">+</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Projeto/Atividade</h3>
+    </div>
+    <div class="card-body">
+        <div class="divProjetoAtividade">
+            @if (!empty(old('projeto_atividade_id')))
+            @foreach (old('projeto_atividade_id') as $key => $tipoProjetoAtividade)
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-4">
+                    <label for="projeto_atividade_id" class="col-form-label">Tipo de Gasto:</label>
+                    <select name="projeto_atividade_id[]"
+                        class="form-control select2 {{$errors->has('projeto_atividade_id.*') ? 'is-invalid' : ''}}"
+                        aria-describedby="projetoAtividadeIdFeedback">
+                        <option value="">Selecione uma opção</option>
+                        @foreach($projetoAtividades as $projetoAtividade)
+                        <option value="{{$projetoAtividade->id}}"
+                            {{$tipoProjetoAtividade == $projetoAtividade->id ? 'selected' : ''}}>
+                            {{$projetoAtividade->nome}}
+                        </option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('projeto_atividade_id.*'))
+                    <div id="projetoAtividadeIdFeedback" class="invalid-feedback">
+                        {{$errors->first('projeto_atividade_id.*')}}
+                    </div>
+                    @endif
+                </div>
+
+                <div class="col-sm-12 col-md-4">
+                    <label for="valor_projeto_atividade" class="col-form-label">Valor do Projeto/Atividade:</label>
+                    <input type="text" name="valor_projeto_atividade[]"
+                        class="form-control money {{$errors->has('valor_projeto_atividade') ? 'is-invalid' : ''}}"
+                        aria-describedby="valorProjetoAtividadeFeedback"
+                        value="{{old('valor_projeto_atividade')[$key]}}">
+                    @if ($errors->has('valor_projeto_atividade'))
+                    <div id="valorProjetoAtividadeFeedback" class="invalid-feedback">
+                        {{$errors->first('valor_projeto_atividade')}}
+                    </div>
+                    @endif
+                </div>
+
+                <div class="col-sm-12 col-md-1">
+                    <label class="col-form-label">&emsp;</label>
+                    <button type="button" class="btn btn-danger btn-flat form-control"
+                        onclick="removeLinhaProjetoAtividade($(this))">
+                        <i class="fas fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            @endforeach
+            @else
+            @if (!empty(@$processo->projetoAtividade))
+            @foreach ($processo->projetoAtividade as $projetoAtividadeTipo)
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-4">
+                    <label for="projeto_atividade_id" class="col-form-label">Projeto/Atividade:</label>
+                    <select name="projeto_atividade_id[]"
+                        class="form-control select2 {{$errors->has('projeto_atividade_id.*') ? 'is-invalid' : ''}}"
+                        aria-describedby="projetoAtividadeIdFeedback">
+                        <option value="">Selecione uma opção</option>
+                        @foreach($projetoAtividades as $projetoAtividade)
+                        <option value="{{$projetoAtividade->id}}"
+                            {{$projetoAtividade->id == $projetoAtividadeTipo->id ? 'selected' : ''}}>
+                            {{$projetoAtividade->nome}}
+                        </option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('projeto_atividade_id.*'))
+                    <div id="projetoAtividadeIdFeedback" class="invalid-feedback">
+                        {{$errors->first('projeto_atividade_id.*')}}
+                    </div>
+                    @endif
+                </div>
+
+                <div class="col-sm-12 col-md-4">
+                    <label for="valor_projeto_atividade" class="col-form-label">Valor do Projeto/Atividade:</label>
+                    <input type="text" name="valor_projeto_atividade[]"
+                        class="form-control money {{$errors->has('valor_projeto_atividade') ? 'is-invalid' : ''}}"
+                        aria-describedby="valorProjetoAtividadeFeedback"
+                        value="{{numero_iso_para_br($processoTipo->pivot->valor_tipo_gasto)}}">
+                    @if ($errors->has('valor_projeto_atividade'))
+                    <div id="valorProjetoAtividadeFeedback" class="invalid-feedback">
+                        {{$errors->first('valor_projeto_atividade')}}
+                    </div>
+                    @endif
+                </div>
+
+                <div class="col-sm-12 col-md-1">
+                    <label for="valor_tipo_gasto" class="col-form-label">&emsp;</label>
+                    <button type="button" class="btn btn-danger btn-flat form-control"
+                        onclick="removeLinhaProjetoAtividade($(this))">
+                        <i class="fas fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            @endforeach
+            @else
+            <div class="form-group row">
+                <div class="col-sm-12 col-md-4">
+                    <label for="projeto_atividade_id" class="col-form-label">Projeto/Atividade:</label>
+                    <select name="projeto_atividade_id[]"
+                        class="form-control select2 {{$errors->has('projeto_atividade_id.*') ? 'is-invalid' : ''}}"
+                        aria-describedby="projetoAtividadeIdFeedback">
+                        <option value="">Selecione uma opção</option>
+                        @foreach($projetoAtividades as $projetoAtividade)
+                        <option value="{{$projetoAtividade->id}}">
+                            {{$projetoAtividade->nome}}
+                        </option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('projeto_atividade_id.*'))
+                    <div id="projetoAtividadeIdFeedback" class="invalid-feedback">
+                        {{$errors->first('projeto_atividade_id.*')}}
+                    </div>
+                    @endif
+                </div>
+
+                <div class="col-sm-12 col-md-4">
+                    <label for="valor_projeto_atividade" class="col-form-label">Valor do Tipo de Gasto:</label>
+                    <input type="text" name="valor_projeto_atividade[]"
+                        class="form-control money {{$errors->has('valor_projeto_atividade') ? 'is-invalid' : ''}}"
+                        aria-describedby="valorProjetoAtividadeFeedback" value="">
+                    @if ($errors->has('valor_projeto_atividade'))
+                    <div id="valorProjetoAtividadeFeedback" class="invalid-feedback">
+                        {{$errors->first('valor_projeto_atividade')}}
+                    </div>
+                    @endif
+                </div>
+            </div>
+            @endif
+            @endif
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-12 col-md-12">
+                <button type="button" class="btn btn-primary btn-flat" onclick="addProjetoAtividade()">+</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card card-default">
+    <div class="card-header">
         <h3 class="card-title">Centrais de Atendimento</h3>
     </div>
     <div class="card-body ">
@@ -531,14 +813,14 @@
                 <textarea name="descricao" class="form-control" cols="30"
                     rows="10">{{empty(old('descricao')) ? @$processo->descricao : old('descricao')}}</textarea>
 
-                @if ($errors->has('descricao'))
-                <div id="descricaoFeedback" class="invalid-feedback">
-                    {{$errors->first('descricao')}}
-                </div>
-                @endif
-            </div>
-        </div>
-    </div>
+@if ($errors->has('descricao'))
+<div id="descricaoFeedback" class="invalid-feedback">
+    {{$errors->first('descricao')}}
+</div>
+@endif
+</div>
+</div>
+</div>
 </div> --}}
 
 <div class="card-footer">
@@ -610,6 +892,125 @@
     function removeLinhaTipoGasto(element) {
         element.parent().parent().remove();
         quantidadeTipoGasto--;
+    }
+
+
+    var quantidadeAcaoConvenio = 1;
+
+    function addAcaoConvenio() {
+        quantidadeAcaoConvenio++;
+
+        if (quantidadeAcaoConvenio > 5) {
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: "Limite de 5 ação/convênio",
+                showConfirmButton: true,
+                timer: 2000
+            })
+            return;
+        }
+        var html = `
+        <div class="form-group row">
+            <div class="col-sm-12 col-md-4">
+                <label for="acao_convenio_id" class="col-form-label">Ação/Convênio:</label>
+                    <select name="acao_convenio_id[]"
+                        class="form-control select2 {{$errors->has('acao_convenio_id') ? 'is-invalid' : ''}}"
+                        aria-describedby="acaoConvenioIdFeedback">
+                    <option value="">Selecione uma opção</option>
+                    @foreach($acaoConvenios as $acaoConvenio)
+                        <option value="{{$acaoConvenio->id}}"
+                            @if(@$processo->acao_convenio_id == $acaoConvenio->id) selected @endif>
+                            {{$acaoConvenio->nome}}
+                        </option>
+                    @endforeach
+                    </select>
+        </div>
+
+    <div class="col-sm-12 col-md-4">
+        <label for="valor_acao_convenio" class="col-form-label">Valor da Ação/Convênio:</label>
+        <input type="text" name="valor_acao_convenio[]"
+        class="form-control money" aria-describedby="acaoConvenioIdFeedback" value="">
+    </div>
+    <div class="col-sm-12 col-md-1">
+        <label class="col-form-label">&emsp;</label>
+        <button type="button" class="btn btn-danger btn-flat form-control"
+        onclick="removeLinhaAcaoConvenio($(this))">
+         <i class="fas fa-solid fa-trash"></i>
+        </button>
+    </div>
+</div>`;
+        $('.divAcaoConvenio').append(html);
+        $(".money").maskMoney({
+            allowNegative: true,
+            thousands: '.',
+            decimal: ',',
+            affixesStay: false
+        });
+    }
+
+    function removeLinhaAcaoConvenio(element) {
+        element.parent().parent().remove();
+        quantidadeAcaoConvenio--;
+    }
+
+    var quantidadeProjetoAtividade = 1;
+
+    function addProjetoAtividade() {
+        quantidadeProjetoAtividade++;
+
+        if (quantidadeProjetoAtividade > 5) {
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: "Limite de 5 projeto/atividade",
+                showConfirmButton: true,
+                timer: 2000
+            })
+            return;
+        }
+        var html = `
+    <div class="form-group row">
+        <div class="col-sm-12 col-md-4">
+            <label for="projeto_atividade_id" class="col-form-label">Projeto/Atividade:</label>
+                <select name="projeto_atividade_id[]"
+                    class="form-control select2 {{$errors->has('projeto_atividade_id') ? 'is-invalid' : ''}}"
+                    aria-describedby="projetoAtividadeIdFeedback">
+                <option value="">Selecione uma opção</option>
+                @foreach($projetoAtividades as $projetoAtividade)
+                    <option value="{{$projetoAtividade->id}}"
+                        @if(@$processo->projeto_atividade_id == $projetoAtividade->id) selected @endif>
+                        {{$projetoAtividade->nome}}
+                    </option>
+                @endforeach
+                </select>
+    </div>
+
+<div class="col-sm-12 col-md-4">
+    <label for="valor_projeto_atividade" class="col-form-label">Valor do Projeto/Atividade:</label>
+    <input type="text" name="valor_projeto_atividade[]"
+    class="form-control money" aria-describedby="projetoAtividadeIdFeedback" value="">
+</div>
+<div class="col-sm-12 col-md-1">
+    <label class="col-form-label">&emsp;</label>
+    <button type="button" class="btn btn-danger btn-flat form-control"
+    onclick="removeLinhaProjetoAtividade($(this))">
+     <i class="fas fa-solid fa-trash"></i>
+    </button>
+</div>
+</div>`;
+        $('.divProjetoAtividade').append(html);
+        $(".money").maskMoney({
+            allowNegative: true,
+            thousands: '.',
+            decimal: ',',
+            affixesStay: false
+        });
+    }
+
+    function removeLinhaProjetoAtividade(element) {
+        element.parent().parent().remove();
+        quantidadeProjetoAtividade--;
     }
 
     var quantidadeCentral = 1;
@@ -728,5 +1129,6 @@
             affixesStay: false
         });
     });
+
 </script>
 @endpush

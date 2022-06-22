@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Administracao\AcaoConvenios;
 use Carbon\Carbon;
 use App\Models\Administracao\TipoGasto;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,7 @@ use Illuminate\Pagination\AbstractPaginator;
 use App\Models\Administracao\AreaAbrangencia;
 use App\Models\Administracao\ProcessoAnotacao;
 use App\Models\Administracao\CentralAtendimento;
+use App\Models\Administracao\ProjetoAtividade;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Models\Administracao\UnidadesContempladas;
 use App\Models\Administracao\SituacaoAcompanhamento;
@@ -20,16 +22,16 @@ class Processo extends Model
     use HasFactory;
 
     protected $fillable = [
-        'sei',
+        'data_processo',
         'edital',
+        'modalidade_id',
+        'objeto_id',
+        'sei',
+        'situacao_acompanhamento_id',
+        'status',
+        'tecnico_responsavel_id',
         'total_estimado',
         'total_homologado',
-        'data_processo',
-        'status',
-        'objeto_id',
-        'modalidade_id',
-        'tecnico_responsavel_id',
-        'situacao_acompanhamento_id',
         'user_cadastro_id',
         'user_alteracao_id',
         'created_at',
@@ -48,11 +50,11 @@ class Processo extends Model
     {
         return self::with(
             'areaAbrangencia',
+            'centrais',
             'modalidade',
+            'situacaoAcompanhamento',
             'tecnicoResponsavel',
             'tiposGastos',
-            'centrais',
-            'situacaoAcompanhamento'
         )
             ->where('status', 'ativo')
             ->where('edital', 'like', "%{$keyword}%")
@@ -60,24 +62,13 @@ class Processo extends Model
             ->paginate($perPage);
     }
 
-    public function anotacoes()
-    {
-        return $this->hasMany(ProcessoAnotacao::class);
-    }
-
-    public function tiposGastos()
-    {
-        return $this->belongsToMany(TipoGasto::class, 'processos_tipos_gastos', 'processo_id', 'tipos_gastos_id')
-            ->withPivot('valor_tipo_gasto', 'valor_tipo_gasto')->withTimestamps();
-    }
-
-    public function centrais()
+    public function acaoConvenio()
     {
         return $this->belongsToMany(
-            CentralAtendimento::class,
-            'central_atendimento_processos',
+            AcaoConvenios::class,
+            'acao_convenios_processos',
             'processo_id',
-            'central_atendimento_id'
+            'acao_convenios_id'
         );
     }
 
@@ -91,19 +82,40 @@ class Processo extends Model
         );
     }
 
-    public function unidades()
+    public function anotacoes()
+    {
+        return $this->hasMany(ProcessoAnotacao::class);
+    }
+
+    public function centrais()
     {
         return $this->belongsToMany(
-            UnidadesContempladas::class,
-            'processo_unidade',
+            CentralAtendimento::class,
+            'central_atendimento_processos',
             'processo_id',
-            'unidades_contempladas_id'
+            'central_atendimento_id'
         );
     }
 
     public function modalidade()
     {
         return $this->belongsTo(Modalidade::class);
+    }
+
+    public function projetoAtividade()
+    {
+        return $this->belongsToMany(
+            ProjetoAtividade::class,
+            'projeto_atividades_processos',
+            'processo_id',
+            'projeto_atividades_id'
+        );
+    }
+
+    public function tiposGastos()
+    {
+        return $this->belongsToMany(TipoGasto::class, 'processos_tipos_gastos', 'processo_id', 'tipos_gastos_id')
+            ->withPivot('valor_tipo_gasto', 'valor_tipo_gasto')->withTimestamps();
     }
 
     public function tecnicoResponsavel()
@@ -114,5 +126,15 @@ class Processo extends Model
     public function situacaoAcompanhamento()
     {
         return $this->belongsTo(SituacaoAcompanhamento::class);
+    }
+
+    public function unidades()
+    {
+        return $this->belongsToMany(
+            UnidadesContempladas::class,
+            'processo_unidade',
+            'processo_id',
+            'unidades_contempladas_id'
+        );
     }
 }
