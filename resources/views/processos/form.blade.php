@@ -325,8 +325,7 @@
             </div>
             @endforeach
             @else
-            @if (!$processo->tiposGastos->isEmpty())
-            {{dd("aqui")}}
+            @if (!empty(@$processo->tiposGastos))
             @foreach ($processo->tiposGastos as $processoTipo)
             <div class="form-group row">
                 <div class="col-sm-12 col-md-4">
